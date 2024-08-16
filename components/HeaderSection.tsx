@@ -1,9 +1,12 @@
-import {truncateHex} from '@builtbymom/web3/utils';
-import {ReactElement, useMemo} from 'react';
-import {useWeb3} from '@builtbymom/web3/contexts/useWeb3';
+import {useMemo} from 'react';
 import Image from 'next/image';
-import {IconChevron} from './common/icons/IconChevrov';
+import {useWeb3} from '@builtbymom/web3/contexts/useWeb3';
+import {truncateHex} from '@builtbymom/web3/utils';
+
 import {useReceivers} from './common/contexts/useRecievers';
+import {IconChevron} from './common/icons/IconChevrov';
+
+import type {ReactElement} from 'react';
 
 export function HeaderSection(): ReactElement {
 	const {onConnect, address, ens, clusters, openLoginModal} = useWeb3();
@@ -11,9 +14,9 @@ export function HeaderSection(): ReactElement {
 
 	const {configuration} = useReceivers();
 
-	const getLabel = () => {
+	const getLabel = (): string => {
 		if (configuration.receivers.length > 0) {
-			return 'to recceivers';
+			return 'to receivers';
 		}
 		return 'to many addresses';
 	};
@@ -22,16 +25,16 @@ export function HeaderSection(): ReactElement {
 		<>
 			<Image
 				src={'/header-bg.png'}
-				className="absolute max-w-[1200px]"
+				className={'absolute max-w-[1200px]'}
 				width={2400}
 				height={1000}
-				alt="header"
+				alt={'header'}
 			/>
-			<div className=" z-10 max-w-[1200px] w-full">
-				<div className="relative py-4 px-6 flex w-full justify-between">
-					<div className="text-primary flex items-center gap-2 font-bold font-2xl">
-						<div className="bg-primary size-8 rounded-full" />
-						DILOGO
+			<div className={'z-10 w-full max-w-[1200px]'}>
+				<div className={'relative flex w-full justify-between px-6 py-4'}>
+					<div className={'font-2xl flex items-center gap-2 font-bold text-primary'}>
+						<div className={'size-8 rounded-full bg-primary'} />
+						{'DILOGO'}
 					</div>
 					<button
 						suppressHydrationWarning
@@ -41,18 +44,22 @@ export function HeaderSection(): ReactElement {
 					</button>
 				</div>
 
-				<div className="z-10 w-full flex-col flex justify-center mt-10">
-					<div className="flex items-center justify-center">
-						<span className="text-primary mr-6 text-[80px] leading-[80px] font-medium">Send</span>
-						<div className="rounded-[64px] bg-black">
-							<button className="py-4 bg-background-modal/90 px-6 h-min rounded-[64px] flex items-center justify-center border border-accent">
-								<span className="text-[32px] mr-[22px] leading-[32px] text-primary">Token</span>
+				<div className={'z-10 mt-10 flex w-full flex-col justify-center'}>
+					<div className={'flex items-center justify-center'}>
+						<span className={'mr-6 text-[80px] font-medium leading-[80px] text-primary'}>{'Send'}</span>
+						<div className={'rounded-[64px] bg-black'}>
+							<button
+								className={
+									'flex h-min items-center justify-center rounded-[64px] border border-accent bg-background-modal/90 px-6 py-4'
+								}>
+								<span className={'mr-[22px] text-[32px] leading-[32px] text-primary'}>{'Token'}</span>
 								<IconChevron />
 							</button>
 						</div>
 					</div>
-					<div className="flex justify-center mt-[20px]">
-						<p className="text-primary w-fit text-[80px] leading-[88px] font-medium">{getLabel()}</p>
+					<div className={'weofiwe wefowe'}></div>
+					<div className={'mt-[20px] flex justify-center'}>
+						<p className={'w-fit text-[80px] font-medium leading-[88px] text-primary'}>{getLabel()}</p>
 					</div>
 				</div>
 			</div>

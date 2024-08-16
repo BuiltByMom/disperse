@@ -1,13 +1,17 @@
+import {WalletContextApp} from '@builtbymom/web3/contexts/useWallet';
+import {WithMom} from '@builtbymom/web3/contexts/WithMom';
+
+import type {AppProps} from 'next/app';
+import type {ReactElement} from 'react';
+
 import '@/styles.css';
 import '@rainbow-me/rainbowkit/styles.css';
-import type {AppProps} from 'next/app';
-import {WalletContextApp} from '@builtbymom/web3/contexts/useWallet';
-import {supportedNetworks} from '@/utils/tools.chains';
-import {WithMom} from '@builtbymom/web3/contexts/WithMom';
+
 import {ReceiversContextApp} from '@/components/common/contexts/useRecievers';
 import {WithFonts} from '@/components/common/WithFonts';
+import {supportedNetworks} from '@/utils/tools.chains';
 
-export default function App({Component, pageProps}: AppProps) {
+export default function App({Component, pageProps}: AppProps): ReactElement {
 	return (
 		<WithMom
 			supportedChains={supportedNetworks}

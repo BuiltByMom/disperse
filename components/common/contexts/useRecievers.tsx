@@ -1,7 +1,11 @@
-import {createContext, Dispatch, ReactElement, SetStateAction, useContext, useState} from 'react';
-import {optionalRenderProps, TOptionalRenderProps} from '../types/optionalRenderProps';
+import {createContext, useContext, useState} from 'react';
 import {useDeepCompareMemo} from '@react-hookz/web';
-import {TAddress} from '@builtbymom/web3/types';
+
+import {optionalRenderProps} from '../types/optionalRenderProps';
+
+import type {Dispatch, ReactElement, SetStateAction} from 'react';
+import type {TAddress} from '@builtbymom/web3/types';
+import type {TOptionalRenderProps} from '../types/optionalRenderProps';
 
 type TReceiver = {
 	address: TAddress;

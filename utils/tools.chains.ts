@@ -1,4 +1,3 @@
-/* eslint-disable object-curly-newline */
 'use client';
 
 import {arbitrum, base, fantom, gnosis, mainnet, optimism, polygon} from 'viem/chains';
@@ -6,19 +5,19 @@ import {toAddress} from '@builtbymom/web3/utils';
 
 import type {Chain} from 'viem/chains';
 import type {TAddress, TNDict} from '@builtbymom/web3/types';
-
-type TSmolChains = TNDict<
+ 
+type TSmolChains = TNDict<   
 	Chain & {
 		coingeckoGasCoinID: string;
-		llamaChainName?: string;
-		yearnRouterAddress: TAddress | undefined;
-	}
+		llamaChainName?: string; 
+		yearnRouterAddress: TAddress | undefined;     
+	} 
 >;
-
-type TAssignRPCUrls = {
+  
+type TAssignRPCUrls = { 
 	default: {
 		http: string[];
-	};
+	}; 
 };
 export function assignRPCUrls(chain: Chain, rpcUrls?: string[]): TAssignRPCUrls {
 	const availableRPCs: string[] = [];
@@ -114,4 +113,7 @@ const CHAINS: TSmolChains = {
 const supportedNetworks: Chain[] = Object.values(CHAINS).filter(e => !e.testnet);
 const supportedTestNetworks: Chain[] = Object.values(CHAINS).filter(e => e.testnet);
 
-export {CHAINS, supportedNetworks, supportedTestNetworks};
+export {
+	CHAINS, supportedNetworks, supportedTestNetworks
+};
+
