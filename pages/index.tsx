@@ -1,10 +1,11 @@
-import Image from 'next/image'
-import { Inter } from 'next/font/google'
+import type {ReactElement} from 'react';
 
-const inter = Inter({ subsets: ['latin'] })
+import {HeaderSection} from '@/components/HeaderSection';
 
-export default function Home() {
-  return (
-   <div className='m-auto w-min'>Disperse</div>
-  )
+export default function Home(): ReactElement {
+	return (
+		<div className={'flex h-screen justify-center bg-background py-6'}>
+			<HeaderSection />
+		</div>
+	);
 }
