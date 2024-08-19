@@ -8,7 +8,7 @@ export function Recievers(): ReactElement {
 	const {configuration} = useDisperse();
 	return (
 		<>
-			<div className={'mt-[100px] grid grid-cols-4 gap-6'}>
+			<div className={'grid grid-cols-4 gap-6'}>
 				{configuration.inputs.length > 0 && (
 					<>
 						{configuration.inputs.map(input => (

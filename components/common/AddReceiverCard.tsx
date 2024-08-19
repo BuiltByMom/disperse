@@ -23,7 +23,6 @@ export function AddReceiverCard({className}: {className?: string}): ReactElement
 		<button
 			onClick={() => {
 				onAddReceivers(1);
-				console.log('add');
 			}}
 			className={cl(
 				'flex h-[152px] w-[282px] flex-col items-center justify-center gap-2 rounded-3xl border border-accent bg-background-modal/90',
