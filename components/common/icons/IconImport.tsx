@@ -17,7 +17,7 @@ export function IconImport(props: React.SVGProps<SVGSVGElement>): ReactElement {
 				d={
 					'M11.333 1.0013C11.333 1.36949 11.0345 1.66797 10.6663 1.66797L1.33301 1.66797C0.964818 1.66797 0.666342 1.36949 0.666342 1.0013C0.666342 0.633112 0.964818 0.334636 1.33301 0.334636L10.6663 0.334637C11.0345 0.334637 11.333 0.633113 11.333 1.0013Z'
 				}
-				fill={'black'}
+				fill={'currentcolor'}
 			/>
 			<path
 				fillRule={'evenodd'}

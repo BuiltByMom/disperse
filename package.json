@@ -13,6 +13,7 @@
   },
   "dependencies": {
     "@builtbymom/web3": "0.0.199",
+    "@headlessui/react": "^2.1.2",
     "@rainbow-me/rainbowkit": "latest",
     "@react-hookz/web": "^24.0.4",
     "axios": "^1.7.4",

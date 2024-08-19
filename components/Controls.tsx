@@ -12,7 +12,7 @@ export function Controls(): ReactElement | null {
 		return null;
 	}
 
-    const onAddReceivers = (amount: number): void => {
+	const onAddReceivers = (amount: number): void => {
 		dispatchConfiguration({
 			type: 'ADD_RECEIVERS',
 			payload: Array(amount)
@@ -20,7 +20,7 @@ export function Controls(): ReactElement | null {
 				.map(() => newDisperseVoidRow())
 		});
 	};
-    
+
 	return (
 		<div className={'mb-10 mt-[100px] flex w-full justify-between'}>
 			<div className={'flex gap-2'}>
@@ -33,12 +33,14 @@ export function Controls(): ReactElement | null {
 					{'Export configuration'}
 				</button>
 				<button className={'flex items-center gap-2 rounded-lg bg-primary/10 p-2 font-bold text-primary'}>
-                    <IconFile />
-                {'Download template'}
-    </button>
+					<IconFile />
+					{'Download template'}
+				</button>
 			</div>
 			<div>
-				<button onClick={() => onAddReceivers(1)} className={'flex items-center gap-2 rounded-lg bg-primary p-2 font-bold text-secondary'}>
+				<button
+					onClick={() => onAddReceivers(1)}
+					className={'flex items-center gap-2 rounded-lg bg-primary p-2 font-bold text-secondary'}>
 					<IconPlus className={'size-4'} />
 					{'Add receiver'}
 				</button>
@@ -46,4 +48,3 @@ export function Controls(): ReactElement | null {
 		</div>
 	);
 }
-

@@ -3,6 +3,8 @@ import {type ReactElement} from 'react';
 import {AddReceiverCard} from './AddReceiverCard';
 import {ReceiverCard} from './ReceiverCard';
 import {useDisperse} from './contexts/useDisperse';
+import {IconFile} from './icons/IconFile';
+import {IconImport} from './icons/IconImport';
 
 export function Recievers(): ReactElement {
 	const {configuration} = useDisperse();
@@ -21,7 +23,19 @@ export function Recievers(): ReactElement {
 					</>
 				)}
 			</div>
-			<div>{configuration.inputs.length === 0 && <AddReceiverCard />}</div>
+			<div className={'flex flex-col items-center gap-10'}>
+				{configuration.inputs.length === 0 && <AddReceiverCard />}
+				<div className={'flex gap-2'}>
+					<button className={'flex items-center gap-2 rounded-lg bg-primary/10 p-2 font-bold text-primary'}>
+						<IconImport />
+						{'Import configuration'}
+					</button>
+					<button className={'flex items-center gap-2 rounded-lg bg-primary/10 p-2 font-bold text-primary'}>
+						<IconFile />
+						{'Download template'}
+					</button>
+				</div>
+			</div>
 		</>
 	);
 }
