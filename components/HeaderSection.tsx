@@ -16,7 +16,7 @@ export function HeaderSection(): ReactElement {
 
 	const getLabel = (): string => {
 		if (configuration.receivers.length > 0) {
-			return 'to receivers';
+			return 'to receivers:';
 		}
 		return 'to many addresses';
 	};
@@ -39,14 +39,21 @@ export function HeaderSection(): ReactElement {
 					<button
 						suppressHydrationWarning
 						onClick={address ? openLoginModal : onConnect}
-						className={'rounded-lg bg-primary/10 p-3 text-sm font-bold text-primary md:px-[30px]'}>
+						className={
+							'rounded-lg bg-primary/10 p-3 text-xs font-bold text-primary md:px-[30px] md:text-sm'
+						}>
 						{ensOrClusters ? ensOrClusters : address ? truncateHex(address, 6) : 'Connect Wallet'}
 					</button>
 				</div>
 
 				<div className={'z-10 mt-10 flex w-full flex-col justify-center'}>
-					<div className={'flex items-center justify-center'}>
-						<span className={'mr-6 text-[80px] font-medium leading-[80px] text-primary'}>{'Send'}</span>
+					<div className={'flex flex-col items-center justify-center gap-6 md:flex-row md:gap-0'}>
+						<span
+							className={
+								'mr-6 text-center text-[40px] font-medium leading-[48px] text-primary md:text-[80px] md:leading-[88px]'
+							}>
+							{'Send'}
+						</span>
 						<div className={'rounded-[64px] bg-black'}>
 							<button
 								className={
@@ -59,7 +66,12 @@ export function HeaderSection(): ReactElement {
 					</div>
 					<div className={'weofiwe wefowe'}></div>
 					<div className={'mt-[20px] flex justify-center'}>
-						<p className={'w-fit text-[80px] font-medium leading-[88px] text-primary'}>{getLabel()}</p>
+						<p
+							className={
+								'w-fit text-center text-[40px] font-medium leading-[48px] text-primary md:text-[80px] md:leading-[88px]'
+							}>
+							{getLabel()}
+						</p>
 					</div>
 				</div>
 			</div>
