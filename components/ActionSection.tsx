@@ -23,9 +23,9 @@ export function ActionSection(): ReactElement | null {
     if(configuration.inputs.length < 1) {
         return null;
     }
-
+ 
 	return (
-		<div className={'mb-40 mt-20 grid w-full grid-cols-3 gap-7 rounded-3xl bg-accent md:px-16 md:py-[60px]'}>
+		<div className={'bg-accent mb-40 mt-20 grid w-full grid-cols-3 gap-7 rounded-3xl md:px-16 md:py-[60px]'}>
 			<div className={'flex flex-col items-start justify-start gap-2'}>
 				<span className={'text-base font-medium'}>{'Total to Disperse:'}</span>
 				{!address && <span className={'text-[32px] font-medium leading-[32px]'}>{'Wallet not connected'}</span>}
@@ -35,7 +35,7 @@ export function ActionSection(): ReactElement | null {
 				<span className={'text-[32px] font-medium leading-[32px]'}>{configuration.inputs.length}</span>
 			</div>
 			<div className={'flex '}>
-				<button onClick={onAction} className={'col-span-1 w-full items-center rounded-3xl bg-secondary text-center text-base text-primary'}>{getButtonTitle()}</button>
+				<button onClick={onAction} className={'bg-secondary text-primary col-span-1 w-full items-center rounded-3xl text-center text-base'}>{getButtonTitle()}</button>
 			</div>
 		</div>
 	);

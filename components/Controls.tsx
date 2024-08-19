@@ -24,15 +24,15 @@ export function Controls(): ReactElement | null {
 	return (
 		<div className={'mb-10 mt-[100px] flex w-full justify-between'}>
 			<div className={'flex gap-2'}>
-				<button className={'flex items-center gap-2 rounded-lg bg-primary p-2 font-bold text-secondary'}>
+				<button className={'bg-primary text-secondary flex items-center gap-2 rounded-lg p-2 font-bold'}>
 					<IconImport />
 					{'Import configuration'}
 				</button>
-				<button className={'flex items-center gap-2 rounded-lg bg-primary p-2 font-bold text-secondary'}>
+				<button className={'bg-primary text-secondary flex items-center gap-2 rounded-lg p-2 font-bold'}>
 					<IconImport className={'rotate-180'} />
 					{'Export configuration'}
 				</button>
-				<button className={'flex items-center gap-2 rounded-lg bg-primary/10 p-2 font-bold text-primary'}>
+				<button className={'bg-primary/10 text-primary flex items-center gap-2 rounded-lg p-2 font-bold'}>
 					<IconFile />
 					{'Download template'}
 				</button>
@@ -40,7 +40,7 @@ export function Controls(): ReactElement | null {
 			<div>
 				<button
 					onClick={() => onAddReceivers(1)}
-					className={'flex items-center gap-2 rounded-lg bg-primary p-2 font-bold text-secondary'}>
+					className={'bg-primary text-secondary flex items-center gap-2 rounded-lg p-2 font-bold'}>
 					<IconPlus className={'size-4'} />
 					{'Add receiver'}
 				</button>

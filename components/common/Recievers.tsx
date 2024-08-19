@@ -26,11 +26,11 @@ export function Recievers(): ReactElement {
 			<div className={'flex flex-col items-center gap-10'}>
 				{configuration.inputs.length === 0 && <AddReceiverCard />}
 				<div className={'flex gap-2'}>
-					<button className={'flex items-center gap-2 rounded-lg bg-primary/10 p-2 font-bold text-primary'}>
+					<button className={'bg-primary/10 text-primary flex items-center gap-2 rounded-lg p-2 font-bold'}>
 						<IconImport />
 						{'Import configuration'}
 					</button>
-					<button className={'flex items-center gap-2 rounded-lg bg-primary/10 p-2 font-bold text-primary'}>
+					<button className={'bg-primary/10 text-primary flex items-center gap-2 rounded-lg p-2 font-bold'}>
 						<IconFile />
 						{'Download template'}
 					</button>

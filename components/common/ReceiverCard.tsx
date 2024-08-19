@@ -16,13 +16,13 @@ export function ReceiverCard({input}: {input: TDisperseInput}): ReactElement {
 		dispatchConfiguration({type: 'DEL_RECEIVER_BY_UUID', payload: input.UUID});
 	};
 
-	return (
-		<div className={'relative col-span-1 w-full rounded-3xl bg-background-modal/90 p-4 md:!w-[282px]'}>
+	return ( 
+		<div className={'bg-background-modal/90 relative col-span-1 w-full rounded-3xl p-4 md:!w-[282px]'}>
 			<button
 				onClick={onDeleteReceiver}
 				// eslint-disable-next-line tailwindcss/enforces-negative-arbitrary-values
 				className={
-					'absolute -right-[7px] -top-[7px] flex size-6 items-center justify-center rounded-full bg-primary'
+					'bg-primary absolute -right-[7px] -top-[7px] flex size-6 items-center justify-center rounded-full'
 				}> 
 				<IconCross className={'size-2'} />
 			</button>

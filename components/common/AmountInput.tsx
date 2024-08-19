@@ -4,11 +4,11 @@ import InputNumber from 'rc-input-number';
 import {cl} from '@builtbymom/web3/utils';
 
 import {useDisperse} from './contexts/useDisperse';
-
+ 
 export function AmountInput(): ReactElement {
 	const {configuration} = useDisperse();
 	return (
-		<label className={'h-14 rounded-2xl border border-primary/10 px-4 py-2'}>
+		<label className={'border-primary/10 h-14 rounded-2xl border px-4 py-2'}>
 			<InputNumber
 				// ref={inputRef}
 				prefixCls={cl(
@@ -28,7 +28,7 @@ export function AmountInput(): ReactElement {
 				spellCheck={'false'}
 				// onBlur={() => set_isFocused(false)}
 			/>
-			{!configuration.tokenToSend && <span className={'text-xs text-primary/40'}>{'Token not selected'}</span>}
+			{!configuration.tokenToSend && <span className={'text-primary/40 text-xs'}>{'Token not selected'}</span>}
 		</label>
 	);
 }
