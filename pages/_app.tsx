@@ -7,7 +7,7 @@ import type {ReactElement} from 'react';
 import '@/styles.css';
 import '@rainbow-me/rainbowkit/styles.css';
 
-import {ReceiversContextApp} from '@/components/common/contexts/useRecievers';
+import {DisperseContextApp} from '@/components/common/contexts/useDisperse';
 import {WithFonts} from '@/components/common/WithFonts';
 import {supportedNetworks} from '@/utils/tools.chains';
 
@@ -17,11 +17,11 @@ export default function App({Component, pageProps}: AppProps): ReactElement {
 			supportedChains={supportedNetworks}
 			tokenLists={['https://raw.githubusercontent.com/SmolDapp/tokenLists/main/lists/yearn-min.json']}>
 			<WithFonts>
-				<WalletContextApp>
-					<ReceiversContextApp>
+				<DisperseContextApp>
+					<WalletContextApp>
 						<Component {...pageProps} />
-					</ReceiversContextApp>
-				</WalletContextApp>
+					</WalletContextApp>
+				</DisperseContextApp>
 			</WithFonts>
 		</WithMom>
 	);

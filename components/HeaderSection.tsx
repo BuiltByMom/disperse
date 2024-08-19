@@ -3,7 +3,7 @@ import Image from 'next/image';
 import {useWeb3} from '@builtbymom/web3/contexts/useWeb3';
 import {truncateHex} from '@builtbymom/web3/utils';
 
-import {useReceivers} from './common/contexts/useRecievers';
+import {useDisperse} from './common/contexts/useDisperse';
 import {IconChevron} from './common/icons/IconChevrov';
 
 import type {ReactElement} from 'react';
@@ -11,11 +11,10 @@ import type {ReactElement} from 'react';
 export function HeaderSection(): ReactElement {
 	const {onConnect, address, ens, clusters, openLoginModal} = useWeb3();
 	const ensOrClusters = useMemo(() => address && (ens || clusters?.name), [address, ens, clusters]);
-
-	const {configuration} = useReceivers();
+	const {configuration} = useDisperse();
 
 	const getLabel = (): string => {
-		if (configuration.receivers.length > 0) {
+		if (configuration.inputs.length > 0) {
 			return 'to receivers:';
 		}
 		return 'to many addresses';
@@ -30,7 +29,7 @@ export function HeaderSection(): ReactElement {
 				height={1000}
 				alt={'header'}
 			/>
-			<div className={'z-10 w-full max-w-[1200px]'}>
+			<div className={'z-10 w-full max-w-[1200px] pb-[100px]'}>
 				<div className={'relative flex w-full justify-between px-6 py-4'}>
 					<div className={'font-2xl flex items-center gap-2 font-bold text-primary'}>
 						<div className={'size-8 rounded-full bg-primary'} />
