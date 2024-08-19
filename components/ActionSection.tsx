@@ -21,9 +21,9 @@ export function ActionSection(): ReactElement | null {
     };
 
     if(configuration.inputs.length < 1) {
-        return null;
+        return null; 
     }
- 
+    
 	return (
 		<div className={'bg-accent mb-40 mt-20 grid w-full grid-cols-3 gap-7 rounded-3xl md:px-16 md:py-[60px]'}>
 			<div className={'flex flex-col items-start justify-start gap-2'}>

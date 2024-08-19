@@ -1,7 +1,7 @@
 import {type ReactElement} from 'react';
 import React from 'react';
 import InputNumber from 'rc-input-number';
-import {cl} from '@builtbymom/web3/utils';
+import {cl} from '@builtbymom/web3/utils'; 
 
 import {useDisperse} from './contexts/useDisperse';
  
