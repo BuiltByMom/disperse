@@ -1,4 +1,5 @@
-import {type ReactElement} from 'react';
+
+import type {ReactElement} from 'react';
 
 import {ActionSection} from '@/components/ActionSection';
 import {Recievers} from '@/components/common/Recievers';
@@ -14,6 +15,6 @@ export default function Home(): ReactElement {
 				<Recievers />
 				<ActionSection />
 			</div>
-		</div>
+		</div> 
 	);
 }

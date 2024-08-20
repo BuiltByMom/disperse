@@ -1,13 +1,14 @@
-import {type ReactElement} from 'react';
-
 import {AddReceiverCard} from './AddReceiverCard';
+import {DownloadTemplateButton} from './DownloadTemplateButton';
+import {ImportConfigurationButton} from './ImportConfigurationButton';
 import {ReceiverCard} from './ReceiverCard';
 import {useDisperse} from './contexts/useDisperse';
-import {IconFile} from './icons/IconFile';
-import {IconImport} from './icons/IconImport';
+
+import type {ReactElement} from 'react';
 
 export function Recievers(): ReactElement {
 	const {configuration} = useDisperse();
+
 	return (
 		<>
 			<div className={'grid grid-cols-4 gap-6'}>
@@ -27,16 +28,8 @@ export function Recievers(): ReactElement {
 				<div className={'flex flex-col items-center gap-10'}>
 					<AddReceiverCard />
 					<div className={'flex gap-2'}>
-						<button 
-							className={'bg-primary/10 text-primary flex items-center gap-2 rounded-lg p-2 font-bold'}>
-							<IconImport />
-							{'Import configuration'}
-						</button>
-						<button
-							className={'bg-primary/10 text-primary flex items-center gap-2 rounded-lg p-2 font-bold'}>
-							<IconFile />
-							{'Download template'}
-						</button>
+						<ImportConfigurationButton />
+						<DownloadTemplateButton />
 					</div>
 				</div>
 			)}

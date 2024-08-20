@@ -50,13 +50,13 @@ export function SelectTokenModal({
 									'relative overflow-hidden min-h-[455px] flex max-w-2xl flex-col items-center justify-center border border-primary/10 rounded-3xl bg-background-modal !p-10 transition-all',
 									'sm:my-8 sm:w-full md:max-w-2xl sm:max-w-lg'
 								)}>
-								<span className={'text-primary absolute left-6 top-6'}>{'Select token'}</span>
+								<span className={'absolute left-6 top-6 text-primary'}>{'Select token'}</span>
 								<button
 									className={
 										'absolute right-6 top-6 p-2 text-neutral-600 transition-all hover:text-neutral-700'
 									}
 									onClick={onClose}>
-									<IconCross className={'text-primary size-3'} />
+									<IconCross className={'size-3 text-primary'} />
 								</button>
 								{children}
 							</DialogPanel>

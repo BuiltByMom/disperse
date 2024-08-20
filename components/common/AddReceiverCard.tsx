@@ -10,6 +10,9 @@ import {IconPlus} from './icons/IconPlus';
 export function AddReceiverCard({className}: {className?: string}): ReactElement {
 	const {dispatchConfiguration} = useDisperse();
 
+	/**********************************************************************************************
+	 ** TODO: write comment of what it does
+	 *********************************************************************************************/
 	const onAddReceivers = (amount: number): void => {
 		dispatchConfiguration({
 			type: 'ADD_RECEIVERS',
@@ -28,8 +31,8 @@ export function AddReceiverCard({className}: {className?: string}): ReactElement
 				'flex h-[152px] w-[282px] flex-col items-center justify-center gap-2 rounded-3xl border border-accent bg-background-modal/90',
 				className
 			)}>
-			<IconPlus className={'text-primary size-6'} />
-			<span className={'text-primary text-base'}>{'Add receiver'}</span>
+			<IconPlus className={'size-6 text-primary'} />
+			<span className={'text-base text-primary'}>{'Add receiver'}</span>
 		</button>
 	);
 }
