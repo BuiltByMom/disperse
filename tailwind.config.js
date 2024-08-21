@@ -1,9 +1,9 @@
 /** @type {import('tailwindcss').Config} \*/
-import type {Config} from 'tailwindcss';
 
 const defaultTheme = require('tailwindcss/defaultTheme');
+const plugin = require('tailwindcss/plugin');
 
-const config: Config = {
+const config = {
 	content: ['./pages/**/*.{js,ts,jsx,tsx}', './components/**/*.{js,ts,tsx,jsx}'],
 
 	theme: {
@@ -23,6 +23,20 @@ const config: Config = {
 			}
 		}
 	},
-	plugins: []
+	plugins: [
+		require('@tailwindcss/forms'),
+		require('tailwindcss-animate'),
+		plugin(function ({addUtilities}) {
+			addUtilities({
+				'.scrollbar-none': {
+					'-ms-overflow-style': 'none',
+					'scrollbar-width': 'none',
+					'&::-webkit-scrollbar': {
+						display: 'none'
+					}
+				}
+			});
+		})
+	]
 };
 export default config;

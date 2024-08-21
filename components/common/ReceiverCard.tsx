@@ -4,12 +4,17 @@ import {AddressInput} from './AddressInput';
 import {AmountInput} from './AmountInput';
 import {useDisperse} from './contexts/useDisperse';
 import {IconCross} from './icons/IconCross';
-import {type TDisperseInput} from './types/disperse.types';
 import {type TInputAddressLike} from './utils/tools.address';
 
+import type {TAmountInputElement,TDisperseInput} from './types/disperse.types';
+ 
 export function ReceiverCard({input}: {input: TDisperseInput}): ReactElement {
 	const inputRef = useRef<HTMLInputElement>(null);
-	const {dispatchConfiguration} = useDisperse();
+	const {configuration, dispatchConfiguration} = useDisperse();
+
+	const onSetAmount = (value: Partial<TAmountInputElement>): void => {
+		dispatchConfiguration({type: 'SET_VALUE', payload: {...value, UUID: input.UUID}}); 
+	};
 
 	/**********************************************************************************************
 	 ** TODO: write comment of what it does
@@ -41,7 +46,11 @@ export function ReceiverCard({input}: {input: TDisperseInput}): ReactElement {
 					onSetValue={onSetReceiver}
 					inputRef={inputRef}
 				/>
-				<AmountInput />
+				<AmountInput 
+				onSetValue={onSetAmount}
+				value={input.value}
+				token={configuration.tokenToSend}
+				/>
 			</div>
 		</div>
 	);
