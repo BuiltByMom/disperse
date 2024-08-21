@@ -57,31 +57,31 @@ export function SelectTokenModal({isOpen, onClose}: {isOpen: boolean; onClose: V
 									'rounded-3xl z-20 bg-background-modal !p-6 transition-all',
 									'sm:my-8 sm:w-full md:max-w-2xl sm:max-w-lg'
 								)}>
-								<span className={'absolute left-6 top-6 text-primary'}>{'Select token'}</span>
+								<span className={'text-primary absolute left-6 top-6'}>{'Select token'}</span>
 								<button
 									className={
 										'absolute right-6 top-6 p-2 text-neutral-600 transition-all hover:text-neutral-700'
 									}
 									onClick={onClose}>
-									<IconCross className={'size-3 text-primary'} />
+									<IconCross className={'text-primary size-3'} />
 								</button>
 								<div className={'flex size-full  justify-start'}>
 									{!address && (
 										<div className={'flex flex-col items-center gap-6'}>
-											<span className={'text-sm text-primary/40'}>
+											<span className={'text-primary/40 text-sm'}>
 												{'Get started by connecting your wallet'}
 											</span>
 											<button
 												onClick={onConnect}
 												className={
-													'flex h-16 items-center justify-center rounded-3xl bg-accent text-base font-bold md:w-[320px]'
+													'bg-accent flex h-16 items-center justify-center rounded-3xl text-base font-bold md:w-[320px]'
 												}>
 												{'Connect wallet'}
 											</button>
 										</div>
 									)}
 									<div className={'mt-10 flex w-full flex-col'}>
-										<label className={'relative flex h-12 w-full rounded-2xl bg-primary/10 px-4 py-3'}>
+										<label className={'bg-primary/10 relative flex h-12 w-full rounded-2xl px-4 py-3'}>
 											<input
 												className={cl(
 													'w-full border-none outline-0 rounded-lg bg-transparent py-3 px-4 text-base',
@@ -175,12 +175,9 @@ function TokenList({
 		dispatchConfiguration({type: 'SET_TOKEN_TO_SEND', payload: token});
 		onCloseModal();
 	}, [dispatchConfiguration, onCloseModal]);
- 
-	// const {getPrices, pricingHash} = usePrices();
-	// const [prices, set_prices] = useState<TDict<TNormalizedBN>>({});
 
 	return (
-		<div className={'overflow-y-auto scrollbar-none'}>
+		<div className={'scrollbar-none overflow-y-auto'}>
 			{searchFilteredTokens.map(token => (
 				<TokenButton
 					token={token}

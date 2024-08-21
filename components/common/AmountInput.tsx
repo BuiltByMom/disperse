@@ -22,20 +22,6 @@ export function AmountInput({value, token, onSetValue}: TAmountInput): ReactElem
 
 	const [isFocused, set_isFocused] = useState<boolean>(false);
 	const {result, validate} = useValidateAmountInput();
-	// const [selectedTokenBalance, set_selectedTokenBalance] = useState(token?.balance ?? zeroNormalizedBN);
-
-	// useEffect(() => {
-	// 	set_selectedTokenBalance(token?.balance ?? zeroNormalizedBN);
-	// }, [token?.balance]);
-
-	// const onSetMax = (): void => {
-	// 	return onSetValue({
-	// 		amount: selectedTokenBalance.display,
-	// 		normalizedBigAmount: selectedTokenBalance,
-	// 		isValid: true,
-	// 		error: undefined
-	// 	});
-	// };
 
 	const getBorderColor = useCallback((): string => {
 		if (isFocused) {
@@ -46,27 +32,6 @@ export function AmountInput({value, token, onSetValue}: TAmountInput): ReactElem
 		}
 		return 'border-neutral-400';
 	}, [isFocused, value.isValid]);
-
-	// const getErrorOrButton = (): JSX.Element => {
-	// 	if (!selectedTokenBalance.normalized) {
-	// 		return <p>{'No token selected'}</p>;
-	// 	}
-	// 	if (!value.amount) {
-	// 		return (
-	// 			<button 
-	// 				onClick={onSetMax}
-	// 				onMouseDown={e => e.preventDefault()}
-	// 				disabled={!token || selectedTokenBalance.raw === 0n}>
-	// 				<p>{`You have ${handleLowAmount(selectedTokenBalance, 2, 6)}`}</p>
-	// 			</button>
-	// 		);
-	// 	}
-	// 	if (value.error) {
-	// 		return <p className={'text-red'}>{value.error}</p>;
-	// 	}
-
-	// 	return <p>{formatCounterValue(value.normalizedBigAmount.normalized, price?.normalized ?? 0)}</p>;
-	// };
 
 	/** Set the validation result to the context */
 	useDeepCompareEffect(() => {
@@ -85,7 +50,7 @@ export function AmountInput({value, token, onSetValue}: TAmountInput): ReactElem
 	}, [token?.address]);
 
 	return (
-		<label className={'h-14 rounded-2xl border border-primary/10 px-4 py-2'}> 
+		<label className={'border-primary/10 h-14 rounded-2xl border px-4 py-2'}> 
 			<InputNumber
 				// ref={inputRef}
 				value={value.amount}
@@ -110,7 +75,7 @@ export function AmountInput({value, token, onSetValue}: TAmountInput): ReactElem
 				onFocus={() => set_isFocused(true)}
 				onBlur={() => set_isFocused(false)}
 			/>
-			{!configuration.tokenToSend && <span className={'text-xs text-primary/40'}>{'Token not selected'}</span>}
+			{!configuration.tokenToSend && <span className={'text-primary/40 text-xs'}>{'Token not selected'}</span>}
 		</label>
 	);
 }
