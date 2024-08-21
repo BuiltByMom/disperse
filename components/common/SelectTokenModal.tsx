@@ -57,31 +57,31 @@ export function SelectTokenModal({isOpen, onClose}: {isOpen: boolean; onClose: V
 									'rounded-3xl z-20 bg-background-modal !p-6 transition-all',
 									'sm:my-8 sm:w-full md:max-w-2xl sm:max-w-lg'
 								)}>
-								<span className={'text-primary absolute left-6 top-6'}>{'Select token'}</span>
+								<span className={'absolute left-6 top-6 text-primary'}>{'Select token'}</span>
 								<button
 									className={
 										'absolute right-6 top-6 p-2 text-neutral-600 transition-all hover:text-neutral-700'
 									}
 									onClick={onClose}>
-									<IconCross className={'text-primary size-3'} />
+									<IconCross className={'size-3 text-primary'} />
 								</button>
 								<div className={'flex size-full  justify-start'}>
 									{!address && (
 										<div className={'flex flex-col items-center gap-6'}>
-											<span className={'text-primary/40 text-sm'}>
+											<span className={'text-sm text-primary/40'}>
 												{'Get started by connecting your wallet'}
 											</span>
 											<button
 												onClick={onConnect}
 												className={
-													'bg-accent flex h-16 items-center justify-center rounded-3xl text-base font-bold md:w-[320px]'
+													'flex h-16 items-center justify-center rounded-3xl bg-accent text-base font-bold md:w-[320px]'
 												}>
 												{'Connect wallet'}
 											</button>
 										</div>
 									)}
 									<div className={'mt-10 flex w-full flex-col'}>
-										<label className={'bg-primary/10 relative flex h-12 w-full rounded-2xl px-4 py-3'}>
+										<label className={'relative flex h-12 w-full rounded-2xl bg-primary/10 px-4 py-3'}>
 											<input
 												className={cl(
 													'w-full border-none outline-0 rounded-lg bg-transparent py-3 px-4 text-base',
@@ -177,7 +177,7 @@ function TokenList({
 	}, [dispatchConfiguration, onCloseModal]);
 
 	return (
-		<div className={'scrollbar-none overflow-y-auto'}>
+		<div className={'overflow-y-auto scrollbar-none'}>
 			{searchFilteredTokens.map(token => (
 				<TokenButton
 					token={token}

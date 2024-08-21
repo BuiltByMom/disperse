@@ -33,9 +33,9 @@ export function Controls(): ReactElement | null {
 				<DownloadTemplateButton />
 			</div>
 			<div>
-				<button
+				<button 
 					onClick={() => onAddReceivers(1)}
-					className={'flex items-center gap-2 rounded-lg bg-primary p-2 font-bold text-secondary'}>
+					className={'bg-primary text-secondary flex items-center gap-2 rounded-lg p-2 font-bold'}>
 					<IconPlus className={'size-4'} />
 					{'Add receiver'}
 				</button>

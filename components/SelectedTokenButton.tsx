@@ -28,7 +28,7 @@ export function SelectedTokenButton(): ReactElement {
 				<button
 					onClick={() => set_isSelectTokenModalOpen(true)}
 					className={
-						'border-accent bg-background-modal/90 flex h-min items-center justify-center rounded-[64px] border px-6 py-4'
+						'flex h-min items-center justify-center rounded-[64px] border border-accent bg-background-modal/90 px-6 py-4'
 					}>
 					{configuration.tokenToSend?.address ? (
 						<TokenButton
@@ -37,7 +37,7 @@ export function SelectedTokenButton(): ReactElement {
 							className={'mr-3 !p-0'}
 						/>
 					) : (
-						<span className={'text-primary mr-[22px] text-[32px] leading-[32px]'}>{'Token'}</span>
+						<span className={'mr-[22px] text-[32px] leading-[32px] text-primary'}>{'Token'}</span>
 					)}
 					<IconChevron />
 				</button>

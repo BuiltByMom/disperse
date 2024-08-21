@@ -9,10 +9,14 @@ import type {TDict, TNDict, TNormalizedBN, TToken} from '@builtbymom/web3/types'
 
 import {APP_CHAIN_ID} from '@/constants';
 
-export function TokenButton(props: {token: TToken; className?: string; onClick?: VoidFunction, prices?: TNDict<TDict<TNormalizedBN>>, price?: TNormalizedBN
-}): ReactElement { 
+export function TokenButton(props: {
+	token: TToken;
+	className?: string;
+	onClick?: VoidFunction;
+	prices?: TNDict<TDict<TNormalizedBN>>;
+	price?: TNormalizedBN;
+}): ReactElement {
 	const {getToken} = useTokenList();
-
 
 	/**********************************************************************************************
 	 ** The tokenIcon memoized value contains the URL of the token icon. Based on the provided
@@ -41,7 +45,7 @@ export function TokenButton(props: {token: TToken; className?: string; onClick?:
 			return 'N/A';
 		}
 		const price = props.prices?.[APP_CHAIN_ID]?.[toAddress(props.token.address)];
-		if (toBigInt(price?.raw) === 0n) { 
+		if (toBigInt(price?.raw) === 0n) {
 			return 'N/A';
 		}
 		const value = props.token.balance.normalized * (price?.normalized || 0);
@@ -77,7 +81,7 @@ export function TokenButton(props: {token: TToken; className?: string; onClick?:
 				' disabled:opacity-20',
 
 				props.className
-			)}> 
+			)}>
 			<div className={cl('flex w-full justify-between')}>
 				<div className={cl('flex w-full justify-between gap-4 items-center')}>
 					{props.token && isAddress(props.token.address) ? (
@@ -95,13 +99,9 @@ export function TokenButton(props: {token: TToken; className?: string; onClick?:
 						</div>
 					)}
 					<div className={'w-full max-w-[400px] text-left'}>
-						<p
-							className={cl(
-								'whitespace-norma text-primary',
-								'text-base font-normal'
-							)}>
+						<p className={cl('whitespace-norma text-primary', 'text-base font-normal')}>
 							{props.token?.symbol || 'Select token'}
-						</p> 
+						</p>
 						{!!props.token?.address && (
 							<p className={'text-xs text-primary/40'}>{truncateHex(props.token.address, 5)}</p>
 						)}

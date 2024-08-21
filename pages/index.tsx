@@ -8,7 +8,7 @@ import {HeaderSection} from '@/components/HeaderSection';
 
 export default function Home(): ReactElement {
 	return ( 
-		<div className={'bg-background flex min-h-screen flex-col items-center justify-start py-6'}>
+		<div className={'flex min-h-screen flex-col items-center justify-start bg-background py-6'}>
 			<HeaderSection />
 			<div className={'max-w-[1200px]'}>
 				<Controls />

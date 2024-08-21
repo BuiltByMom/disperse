@@ -22,15 +22,15 @@ export function HeaderSection(): ReactElement {
 			/>
 			<div className={'z-30 w-full max-w-[1200px] pb-[100px]'}>
 				<div className={'relative flex w-full justify-between px-6 py-4'}>
-					<div className={'font-2xl text-primary flex items-center gap-2 font-bold'}> 
-						<div className={'bg-primary size-8 rounded-full'} />
+					<div className={'font-2xl flex items-center gap-2 font-bold text-primary'}> 
+						<div className={'size-8 rounded-full bg-primary'} />
 						{'DILOGO'}
 					</div>
 					<button
 						suppressHydrationWarning
 						onClick={address ? openLoginModal : onConnect}
 						className={
-							'bg-primary/10 text-primary rounded-lg p-3 text-xs font-bold md:px-[30px] md:text-sm'
+							'rounded-lg bg-primary/10 p-3 text-xs font-bold text-primary md:px-[30px] md:text-sm'
 						}>
 						{ensOrClusters ? ensOrClusters : address ? truncateHex(address, 6) : 'Connect Wallet'}
 					</button>
@@ -40,7 +40,7 @@ export function HeaderSection(): ReactElement {
 					<div className={'flex flex-col items-center justify-center gap-6 md:flex-row md:gap-0'}>
 						<span
 							className={
-								'text-primary mr-6 text-center text-[40px] font-medium leading-[48px] md:text-[80px] md:leading-[88px]'
+								'mr-6 text-center text-[40px] font-medium leading-[48px] text-primary md:text-[80px] md:leading-[88px]'
 							}>
 							{'Send'}
 						</span>
@@ -50,7 +50,7 @@ export function HeaderSection(): ReactElement {
 					<div className={'mt-[20px] flex justify-center'}>
 						<p
 							className={
-								'text-primary w-fit text-center text-[40px] font-medium leading-[48px] md:text-[80px] md:leading-[88px]'
+								'w-fit text-center text-[40px] font-medium leading-[48px] text-primary md:text-[80px] md:leading-[88px]'
 							}>
 							{'to receivers:'}
 						</p>
