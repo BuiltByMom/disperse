@@ -100,7 +100,7 @@ export function ImportConfigurationButton({className}: {className?: string}): Re
 	return (
 		<button
 			className={
-				cl('relative flex cursor-pointer items-center gap-2 rounded-lg bg-primary/10 p-2 font-bold text-primary', className)
+				cl('relative flex cursor-pointer text-xs md:text-base items-center gap-2 rounded-lg bg-primary/10 p-2 font-bold text-primary', className)
 			}
 			onClick={() => {
 				document.querySelector<HTMLInputElement>('#file-upload')?.click();

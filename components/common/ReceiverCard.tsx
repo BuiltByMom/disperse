@@ -41,7 +41,7 @@ export function ReceiverCard({input}: {input: TDisperseInput}): ReactElement {
 	};
 
 	return (
-		<div className={'relative col-span-1 w-full rounded-3xl bg-background-modal/90 p-4 md:!w-[282px]'}>
+		<div className={'relative col-span-1 w-full rounded-3xl bg-background-modal/90 p-4'}>
 			<button
 				onClick={onDeleteReceiver}
 				// eslint-disable-next-line tailwindcss/enforces-negative-arbitrary-values

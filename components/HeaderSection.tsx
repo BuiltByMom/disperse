@@ -15,11 +15,17 @@ export function HeaderSection(): ReactElement {
 		<>
 			<Image
 				src={'/header-bg.png'}
-				className={'absolute z-0 max-w-[1200px]'}
+				className={'absolute z-0 hidden max-w-[1200px] md:flex'}
 				width={2400}
 				height={1000}
 				alt={'header'}
-			/>
+			/><Image
+			src={'/header-bg-mobile.png'}
+			className={'absolute z-0 flex h-[400px] object-cover md:hidden'}
+			width={2400}
+			height={1000}
+			alt={'header'}
+		/>
 			<div className={'z-30 w-full max-w-[1200px] pb-[100px]'}>
 				<div className={'relative flex w-full justify-between px-6 py-4'}>
 					<div className={'font-2xl flex items-center gap-2 font-bold text-primary'}>

@@ -28,7 +28,7 @@ export function DownloadTemplateButton({className}: {className?: string}): React
 	return (
 		<button
 			onClick={downloadTemplate}
-			className={cl('flex items-center gap-2 rounded-lg bg-primary/10 p-2 font-bold text-primary', className)}>
+			className={cl('flex text-xs md:text-base items-center gap-2 rounded-lg bg-primary/10 p-2 font-bold text-primary', className)}>
 			<IconFile />
 			{'Download template'}
 		</button>

@@ -40,7 +40,13 @@ export function ActionSection(): ReactElement | null {
 			4,
 			configuration.tokenToSend?.decimals || 18
 		)} ${configuration.tokenToSend?.symbol}`;
-	}, [address, configuration.tokenToSend?.address, configuration.tokenToSend?.decimals, configuration.tokenToSend?.symbol, totalToDisperse]);
+	}, [
+		address,
+		configuration.tokenToSend?.address,
+		configuration.tokenToSend?.decimals,
+		configuration.tokenToSend?.symbol,
+		totalToDisperse
+	]);
 
 	/**********************************************************************************************
 	 ** TODO: write comment of what it does
@@ -69,7 +75,11 @@ export function ActionSection(): ReactElement | null {
 	}
 
 	return (
-		<div className={'mb-40 mt-20 grid w-full grid-cols-3 gap-7 rounded-3xl bg-accent md:px-16 md:py-[60px]'}>
+		<div
+			className={cl(
+				'mt-20 flex flex-col w-full md:w-auto gap-7 rounded-t-3xl bg-accent px-6 py-10',
+				'md:mb-40 md:grid md:size-full md:grid-cols-3 md:rounded-3xl md:px-16 md:py-[60px]'
+			)}>
 			<div className={'flex flex-col items-start justify-start gap-2'}>
 				<span className={'text-base font-medium'}>{'Total to Disperse:'}</span>
 				<span className={'text-[32px] font-medium leading-[32px]'}>{getTotalToDisperse()}</span>
@@ -78,12 +88,12 @@ export function ActionSection(): ReactElement | null {
 				<span className={'text-start text-base font-medium'}>{'Total receivers:'}</span>
 				<span className={'text-[32px] font-medium leading-[32px]'}>{configuration.inputs.length}</span>
 			</div>
-			<div className={'flex '}>
+			<div className={'flex'}>
 				<button
 					onClick={onAction}
 					disabled={isButtonDisabled}
 					className={cl(
-						'col-span-1 w-full items-center rounded-3xl bg-secondary text-center text-base text-primary',
+						'col-span-1 w-full h-16 items-center rounded-3xl bg-secondary text-center text-base text-primary',
 						'disabled:text-primary/70 disabled:bg-secondary/90 disabled:cursor-not-allowed'
 					)}>
 					{getButtonTitle()}

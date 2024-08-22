@@ -35,7 +35,7 @@ export function ExportConfigurationButton({className}: {className?: string}): Re
 	return (
 		<button
 			onClick={downloadConfiguration}
-			className={cl('flex items-center gap-2 rounded-lg bg-primary p-2 font-bold text-secondary', className)}>
+			className={cl('flex text-xs md:text-base items-center gap-2 rounded-lg bg-primary p-2 font-bold text-secondary', className)}>
 			<IconImport className={'rotate-180'} />
 			{'Export configuration'}
 		</button>

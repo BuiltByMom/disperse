@@ -28,7 +28,7 @@ export function AddReceiverCard({className}: {className?: string}): ReactElement
 				onAddReceivers(1);
 			}}
 			className={cl(
-				'flex h-[152px] w-[282px] flex-col items-center justify-center',
+				'flex h-[152px] flex-col items-center justify-center',
 				'gap-2 rounded-3xl border border-accent bg-background-modal/90',
 				'hover:bg-primary/10',
 				className

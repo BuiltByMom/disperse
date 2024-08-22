@@ -30,13 +30,13 @@ export function Controls(): ReactElement | null {
 	};
 
 	return (
-		<div className={'mb-10 mt-[100px] flex w-full justify-between'}>
-			<div className={'flex gap-2'}>
+		<div className={'my-10 flex w-full justify-between px-6 md:mt-[100px] md:px-0'}>
+			<div className={'grid grid-cols-2 gap-4 md:flex md:gap-2'}>
 				<ImportConfigurationButton className={'!bg-primary !text-secondary hover:!bg-primary/90'} />
 				<ExportConfigurationButton className={'hover:!bg-primary/90'} />
 				<DownloadTemplateButton className={'hover:bg-primary/20'} />
 			</div>
-			<div>
+			<div className={'hidden md:flex'}>
 				<button 
 					onClick={() => onAddReceivers(1)}
 					className={'flex items-center gap-2 rounded-lg bg-primary p-2 font-bold text-secondary hover:!bg-primary/90'}>
