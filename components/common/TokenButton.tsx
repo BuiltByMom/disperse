@@ -76,10 +76,9 @@ export function TokenButton(props: {
 		<button
 			onClick={props.onClick}
 			className={cl(
-				'flex flex-row gap-2 items-center justify-between rounded-lg py-4 w-full  cursor-pointer',
-				'disabled:cursor-not-allowed',
-				' disabled:opacity-20',
-
+				'flex flex-row gap-2 items-center justify-between py-4 px-6 w-full cursor-pointer',
+				'disabled:cursor-not-allowed disabled:opacity-20',
+				'hover:bg-primary/10 transition-all',
 				props.className
 			)}>
 			<div className={cl('flex w-full justify-between')}>

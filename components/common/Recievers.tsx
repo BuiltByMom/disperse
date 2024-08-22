@@ -28,8 +28,8 @@ export function Recievers(): ReactElement {
 				<div className={'flex flex-col items-center gap-10'}>
 					<AddReceiverCard />
 					<div className={'flex gap-2'}>
-						<ImportConfigurationButton />
-						<DownloadTemplateButton />
+						<ImportConfigurationButton className={'hover:bg-primary/20'} />
+						<DownloadTemplateButton className={'hover:bg-primary/20'} />
 					</div>
 				</div>
 			)}
