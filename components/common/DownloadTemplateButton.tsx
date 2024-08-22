@@ -6,8 +6,7 @@ import {IconFile} from './icons/IconFile';
 import type {ReactElement} from 'react';
 
 export function DownloadTemplateButton({className}: {className?: string}): ReactElement {
-
-    /**********************************************************************************************
+	/**********************************************************************************************
 	 ** TODO: write comment of what it does
 	 *********************************************************************************************/
 	const downloadTemplate = async (): Promise<void> => {
@@ -21,14 +20,17 @@ export function DownloadTemplateButton({className}: {className?: string}): React
 		a.setAttribute('hidden', '');
 		a.setAttribute('href', url);
 		a.setAttribute('download', name);
-		document.body.appendChild(a); 
+		document.body.appendChild(a);
 		a.click();
 		document.body.removeChild(a);
 	};
 	return (
 		<button
 			onClick={downloadTemplate}
-			className={cl('flex text-xs md:text-base items-center gap-2 rounded-lg bg-primary/10 p-2 font-bold text-primary', className)}>
+			className={cl(
+				'flex text-xs md:text-base items-center gap-2 rounded-lg bg-primary/10 p-2 font-bold text-primary',
+				className
+			)}>
 			<IconFile />
 			{'Download template'}
 		</button>

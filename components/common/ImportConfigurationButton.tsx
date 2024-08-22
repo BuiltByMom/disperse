@@ -15,7 +15,7 @@ export function ImportConfigurationButton({className}: {className?: string}): Re
 	const {configuration, dispatchConfiguration} = useDisperse();
 	const {validate: validateAmount} = useValidateAmountInput();
 
-    /**********************************************************************************************
+	/**********************************************************************************************
 	 ** TODO: write comment of what it does
 	 *********************************************************************************************/
 	const handleFileUpload = (e: ChangeEvent<HTMLInputElement>): void => {
@@ -39,7 +39,6 @@ export function ImportConfigurationButton({className}: {className?: string}): Re
 				skipEmptyLines: true
 			});
 
-          
 			/**************************************************************************************
 			 ** Check if the file is valid
 			 *************************************************************************************/
@@ -49,7 +48,7 @@ export function ImportConfigurationButton({className}: {className?: string}): Re
 				parsedCSV.meta.fields.length === 2 &&
 				parsedCSV.meta.fields.includes('receiverAddress') &&
 				parsedCSV.meta.fields.includes('value');
- 
+
 			if (isValidFile) {
 				/**************************************************************************************
 				 ** Extract field names
@@ -99,9 +98,10 @@ export function ImportConfigurationButton({className}: {className?: string}): Re
 	};
 	return (
 		<button
-			className={
-				cl('relative flex cursor-pointer text-xs md:text-base items-center gap-2 rounded-lg bg-primary/10 p-2 font-bold text-primary', className)
-			}
+			className={cl(
+				'relative flex cursor-pointer text-xs md:text-base items-center gap-2 rounded-lg bg-primary/10 p-2 font-bold text-primary',
+				className
+			)}
 			onClick={() => {
 				document.querySelector<HTMLInputElement>('#file-upload')?.click();
 			}}>
