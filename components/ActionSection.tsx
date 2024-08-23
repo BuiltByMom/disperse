@@ -9,14 +9,18 @@ export function ActionSection(): ReactElement | null {
 	const {configuration} = useDisperse();
 
 	/**********************************************************************************************
-	 ** TODO: write comment of what it does
+	 ** totalToDisperse function calculates the total amount to disperse by summing the normalized
+	 ** values of all input rows in the configuration. It is memoized with useMemo to optimize
+	 ** performance and only recalculates when the inputs change.
 	 *********************************************************************************************/
 	const totalToDisperse = useMemo((): bigint => {
 		return configuration.inputs.reduce((acc, row): bigint => acc + row.value.normalizedBigAmount.raw, 0n) ?? 0;
 	}, [configuration.inputs]);
 
 	/**********************************************************************************************
-	 ** TODO: write comment of what it does
+	 ** isButtonDisabled function determines whether the button should be disabled based on the
+	 ** presence of a selected token address and the total amount to disperse. It returns true if
+	 ** either condition is not met and is memoized to optimize performance.
 	 *********************************************************************************************/
 	const isButtonDisabled = useMemo((): boolean => {
 		if (!configuration.tokenToSend?.address || totalToDisperse === BigInt(0)) {
@@ -26,7 +30,10 @@ export function ActionSection(): ReactElement | null {
 	}, [configuration.tokenToSend?.address, totalToDisperse]);
 
 	/**********************************************************************************************
-	 ** TODO: write comment of what it does
+	 ** getTotalToDisperse function returns a formatted string representing the total amount to
+	 ** disperse. It checks if the wallet is connected and if a token is selected, and formats
+	 ** the total amount with the appropriate number of decimals. It uses useCallback to avoid
+	 ** unnecessary recalculations.
 	 *********************************************************************************************/
 	const getTotalToDisperse = useCallback((): string => {
 		if (!address) {
@@ -49,7 +56,9 @@ export function ActionSection(): ReactElement | null {
 	]);
 
 	/**********************************************************************************************
-	 ** TODO: write comment of what it does
+	 ** getButtonTitle function returns a string for the button's title based on whether the wallet
+	 ** is connected. It returns 'Connect wallet' if the wallet is not connected, and 'Approve
+	 ** and Disperse' otherwise.
 	 *********************************************************************************************/
 	const getButtonTitle = (): string => {
 		if (!address) {
@@ -67,9 +76,6 @@ export function ActionSection(): ReactElement | null {
 		}
 	};
 
-	/**********************************************************************************************
-	 ** TODO: write comment of what it does
-	 *********************************************************************************************/
 	if (configuration.inputs.length < 1) {
 		return null;
 	}

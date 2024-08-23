@@ -9,7 +9,11 @@ export function ExportConfigurationButton({className}: {className?: string}): Re
 	const {configuration} = useDisperse();
 
 	/**********************************************************************************************
-	 ** TODO: write comment of what it does
+	 ** downloadConfiguration function generates a CSV file from the configuration inputs and
+	 ** triggers a download of the file. It maps over the inputs to extract receiver addresses and
+	 ** values, filters out any invalid entries, and then creates a Blob from the CSV string.
+	 ** Finally, it generates a URL for the Blob and creates an anchor element to download the file
+	 ** with a name based on the current date.
 	 *********************************************************************************************/
 	const downloadConfiguration = useCallback(async () => {
 		const receiverEntries = configuration.inputs
@@ -31,13 +35,14 @@ export function ExportConfigurationButton({className}: {className?: string}): Re
 		a.click();
 		document.body.removeChild(a);
 	}, [configuration.inputs]);
+
 	return (
 		<button
 			onClick={downloadConfiguration}
 			className={cl(
 				'flex text-xs md:text-base items-center gap-2 rounded-lg bg-primary p-2 font-bold text-secondary',
 				className
-			)}> 
+			)}>
 			<IconImport className={'rotate-180'} />
 			{'Export configuration'}
 		</button>

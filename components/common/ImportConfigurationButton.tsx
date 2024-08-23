@@ -16,7 +16,10 @@ export function ImportConfigurationButton({className}: {className?: string}): Re
 	const {validate: validateAmount} = useValidateAmountInput();
 
 	/**********************************************************************************************
-	 ** TODO: write comment of what it does
+	 ** handleFileUpload function manages the CSV file upload process. It reads the file, parses
+	 ** the CSV data using Papa Parse, and validates the file's structure and content. Each row is
+	 ** processed to create records, ensuring addresses and amounts are valid. Valid records are
+	 ** dispatched to update the state with new receiver entries.
 	 *********************************************************************************************/
 	const handleFileUpload = (e: ChangeEvent<HTMLInputElement>): void => {
 		if (!e.target.files) {

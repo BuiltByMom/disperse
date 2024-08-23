@@ -160,7 +160,9 @@ function TokenList({
 	const tokensWithBalance = listTokensWithBalance();
 
 	/**********************************************************************************************
-	 ** TODO: Add a comment of what it does
+	 ** tokensDict function creates a memoized dictionary of tokens categorized by type. It maps
+	 ** 'your_tokens' to tokensWithBalance and 'popular' to popularTokens, updating only when
+	 ** dependencies change.
 	 *********************************************************************************************/
 	const tokensDict: {[key: string]: TToken[]} = useMemo(() => {
 		return {
@@ -173,7 +175,10 @@ function TokenList({
 	const prices = getPrices(tokensDict[currentTab]);
 
 	/**********************************************************************************************
-	 ** TODO: Add a comment of what it does
+	 ** searchFilteredTokens function computes a filtered list of tokens based on the current tab
+	 ** and search value. It returns a slice of popular tokens, tokens with a balance, or filters
+	 ** tokens by address, symbol, or name according to the search value. It is memoized with
+	 ** useMemo to optimize performance.
 	 *********************************************************************************************/
 	const searchFilteredTokens = useMemo(() => {
 		if (!searchValue && currentTab === 'popular') {
@@ -191,7 +196,8 @@ function TokenList({
 	}, [currentTab, popularTokens, searchValue, tokensDict, tokensWithBalance]);
 
 	/**********************************************************************************************
-	 ** TODO: Add a comment of what it does
+	 ** onSelectToken function dispatches an action to update the selected token in the state and
+	 ** then closes the modal. It is memoized using useCallback to avoid unnecessary re-renders.
 	 *********************************************************************************************/
 	const onSelectToken = useCallback(
 		(token: TToken) => {

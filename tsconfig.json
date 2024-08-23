@@ -4,18 +4,17 @@
 		"baseUrl": ".",
 		"paths": {
 			"@/*": ["./*"],
-			"@lib/*": ["packages/lib/*"],
-			"@smolDesignSystem/*": ["packages/smol/components/designSystem/*"],
-			"@smolContexts/*": ["packages/smol/contexts/*"],
-			"@smolHooks/*": ["packages/smol/hooks/*"],
-			"@smolLandingDesignSystem/*": ["packages/smol-landing/components/designSystem/*"]
+			"@common/*": ["components/common/*"],
+			"@icons/*": ["components/icons/*"],
+			"@utils/*": ["utils/*"],
+			"@types": ["utils/types"]
 		},
 		"types": ["bun-types"],
 		"target": "esnext",
 		"module": "esnext",
 		"lib": ["es6", "es7", "esnext", "dom"],
 		"allowImportingTsExtensions": true,
-		"moduleDetection": "force", 
+		"moduleDetection": "force",
 		"allowJs": true,
 		"jsx": "preserve",
 		"removeComments": false,
@@ -43,31 +42,27 @@
 		"isolatedModules": true,
 		"composite": true,
 		"downlevelIteration": true,
-		"plugins": [{"name": "next"}]
+		"plugins": [
+			{
+				"name": "next"
+			}
+		]
 	},
-	"exclude": ["node_modules", "_app"],
+	"exclude": ["node_modules"],
 	"include": [
 		"**/*.css",
 		"**/*.ts",
 		"**/*.tsx",
 		"**/*.d.tsx",
-		"packages",
 		"public",
 		"public/manifest.json",
-		"stylelint.config.js",
-		"commitlint.config.js", 
-		"**/next.config.js",
-		"**/postcss.config.js",
-		"**/tailwind.config.js",
-		"packages/*/postcss.config.js",
-		"packages/*/tailwind.config.js",
-		"packages/*/next.config.js",
-		"packages/*/stylelint.config.js",
+		"postcss.config.js",
+		"tailwind.config.js",
+		"next.config.js",
+		"theme.config.js",
 		".eslintrc.js",
 		".next/types/**/*.ts",
-		"jest.config.js",
-		"vitest.config.ts",
-		"worker/index.js",
-		"utils/*/*.json"
+		"stylelint.config",
+		"commitlint.config"
 	]
 }

@@ -4,15 +4,15 @@ import {useAsyncAbortable} from '@react-hookz/web';
 
 import {TextTruncate} from './TextTruncate';
 import {useValidateAddressInput} from './hooks/useValidateAddressInput';
-import {type TInputAddressLike} from './utils/tools.address'; 
+import {type TInputAddressLike} from './utils/tools.address';
 
 export function AddressInput({
 	value,
-	onSetValue, 
+	onSetValue,
 	inputRef
 }: {
 	value: TInputAddressLike;
-	onSetValue: (value: Partial<TInputAddressLike>) => void; 
+	onSetValue: (value: Partial<TInputAddressLike>) => void;
 	inputRef: RefObject<HTMLInputElement>;
 }): ReactElement {
 	const [isFocused, set_isFocused] = useState(false);
@@ -20,9 +20,9 @@ export function AddressInput({
 	const {validate} = useValidateAddressInput();
 	const [{result}, actions] = useAsyncAbortable(validate, undefined);
 
-
 	/**********************************************************************************************
-	 ** TODO: write comment of what it does
+	 ** onChange function handles input changes by aborting any ongoing actions, setting the new
+	 ** value with the provided input, and then executing the necessary actions based on the updated input.
 	 *********************************************************************************************/
 	const onChange = (input: string): void => {
 		actions.abort();
@@ -31,7 +31,9 @@ export function AddressInput({
 	};
 
 	/**********************************************************************************************
-	 ** TODO: write comment of what it does
+	 ** getInputValue function returns the appropriate input value based on the focus state and
+	 ** the format of the input. If focused, it returns the full input label. If the input is an
+	 ** address, it returns a truncated version of the address. Otherwise, it returns the label as is.
 	 *********************************************************************************************/
 	const getInputValue = useCallback((): string | undefined => {
 		if (isFocused) {
@@ -45,9 +47,10 @@ export function AddressInput({
 		return value.label;
 	}, [isFocused, value.label]);
 
-
 	/**********************************************************************************************
-	 ** TODO: write comment of what it does
+	 ** useEffect hook updates the component's value when the result changes. If a valid result is
+	 ** present, it triggers the onSetValue function with the new result. The effect only runs
+	 ** when the result dependency changes.
 	 *********************************************************************************************/
 	useEffect(() => {
 		if (!result) {
@@ -58,7 +61,10 @@ export function AddressInput({
 	}, [result]);
 
 	/**********************************************************************************************
-	 ** TODO: write comment of what it does
+	 ** onFocusInput function manages the focus state of an input element. If the input is not
+	 ** already focused, it sets the focus state to true and, after a brief delay, selects the
+	 ** entire input text and scrolls to the end of the input. If the input is already focused,
+	 ** it simply ensures the focus state remains true.
 	 *********************************************************************************************/
 	const onFocusInput = useCallback(() => {
 		if (!isFocused) {
@@ -77,7 +83,13 @@ export function AddressInput({
 	}, [inputRef, isFocused, value.label.length]);
 
 	return (
-		<label className={cl('h-14 rounded-2xl border px-4 py-2', isTouched && value.label && (value.error || !value.isValid || value.isValid === 'undetermined') ? 'border-fail' : 'border-primary/10')}>
+		<label
+			className={cl(
+				'h-14 rounded-2xl border px-4 py-2',
+				isTouched && value.label && (value.error || !value.isValid || value.isValid === 'undetermined')
+					? 'border-fail'
+					: 'border-primary/10'
+			)}>
 			<input
 				// ref={inputRef}
 				className={cl(
@@ -103,16 +115,21 @@ export function AddressInput({
 				}}
 			/>
 			<TextTruncate
-				value={(isAddress(value?.address)) && toAddress(value.address) ? truncateHex(value.address, 6) : value.error || ''}
+				value={
+					isAddress(value?.address) && toAddress(value.address)
+						? truncateHex(value.address, 6)
+						: value.error || ''
+				}
 				className={cl(
 					'text-primary/40',
 					isFocused ? 'hidden' : 'block',
 					isFocused ? 'translate-y-8' : 'translate-y-0',
 					'pointer-events-none',
-					value.error || !value.isValid || value.isValid === 'undetermined' ? '!text-fail' : 'text-neutral-600'
+					value.error || !value.isValid || value.isValid === 'undetermined'
+						? '!text-fail'
+						: 'text-neutral-600'
 				)}
 			/>
-
 		</label>
 	);
 }

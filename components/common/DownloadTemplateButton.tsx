@@ -7,7 +7,10 @@ import type {ReactElement} from 'react';
 
 export function DownloadTemplateButton({className}: {className?: string}): ReactElement {
 	/**********************************************************************************************
-	 ** TODO: write comment of what it does
+	 ** downloadTemplate function generates a CSV file from the receiverEntries array and triggers
+	 ** a download of the file. It creates a Blob from the CSV string, generates a URL for the
+	 ** Blob, and then creates an anchor element to download the file with a name based on the
+	 ** current date.
 	 *********************************************************************************************/
 	const downloadTemplate = async (): Promise<void> => {
 		const receiverEntries = [{receiverAddress: '0x10001192576E8079f12d6695b0948C2F41320040', value: '4.20'}];
@@ -24,6 +27,7 @@ export function DownloadTemplateButton({className}: {className?: string}): React
 		a.click();
 		document.body.removeChild(a);
 	};
+
 	return (
 		<button
 			onClick={downloadTemplate}
