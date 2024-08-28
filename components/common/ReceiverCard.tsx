@@ -1,4 +1,5 @@
 import {type ReactElement, useRef} from 'react';
+import {cl} from '@builtbymom/web3/utils';
 
 import {AddressInput} from './AddressInput';
 import {AmountInput} from './AmountInput';
@@ -8,7 +9,12 @@ import {type TInputAddressLike} from './utils/tools.address';
 
 import type {TAmountInputElement, TDisperseInput} from './types/disperse.types';
 
-export function ReceiverCard({input}: {input: TDisperseInput}): ReactElement {
+type TReceiverCardProps = {
+	input: TDisperseInput;
+	isDuplicated?: boolean;
+};
+
+export function ReceiverCard({input, isDuplicated}: TReceiverCardProps): ReactElement {
 	const inputRef = useRef<HTMLInputElement>(null);
 	const {configuration, dispatchConfiguration} = useDisperse();
 
@@ -41,12 +47,15 @@ export function ReceiverCard({input}: {input: TDisperseInput}): ReactElement {
 	};
 
 	return (
-		<div className={'relative col-span-1 w-full rounded-3xl bg-background-modal/90 p-4'}>
+		<div
+			className={cl(
+				'relative col-span-1 w-full rounded-3xl bg-background-modal/90 p-4',
+				isDuplicated ? 'border-warning border' : ''
+			)}>
 			<button
 				onClick={onDeleteReceiver}
-				// eslint-disable-next-line tailwindcss/enforces-negative-arbitrary-values
 				className={
-					'absolute -right-[7px] -top-[7px] flex size-6 items-center justify-center rounded-full bg-primary hover:bg-primary/90'
+					'absolute right-[-7px] top-[-7px] flex size-6 items-center justify-center rounded-full bg-primary hover:bg-primary/90'
 				}>
 				<IconCross className={'size-2'} />
 			</button>

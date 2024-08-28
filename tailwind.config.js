@@ -15,7 +15,8 @@ const config = {
 				background: '#000000',
 				'background-modal': '#131313',
 				fail: '#E53200',
-				success: '#00A66F'
+				success: '#00A66F',
+				warning: '#FF9900'
 			},
 			fontFamily: {
 				aeonik: ['var(--font-aeonik)', 'Aeonik', ...defaultTheme.fontFamily.sans],

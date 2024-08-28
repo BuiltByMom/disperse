@@ -1,6 +1,6 @@
 import {type ReactElement, useCallback, useMemo} from 'react';
 import {useWeb3} from '@builtbymom/web3/contexts/useWeb3';
-import {cl, formatAmount, toNormalizedValue} from '@builtbymom/web3/utils';
+import {cl, formatAmount, isZeroAddress, toBigInt, toNormalizedValue} from '@builtbymom/web3/utils';
 
 import {useDisperse} from './common/contexts/useDisperse';
 
@@ -17,17 +17,29 @@ export function ActionSection(): ReactElement | null {
 		return configuration.inputs.reduce((acc, row): bigint => acc + row.value.normalizedBigAmount.raw, 0n) ?? 0;
 	}, [configuration.inputs]);
 
+	const isValid = useMemo((): boolean => {
+		return configuration.inputs.every((row): boolean => {
+			if (!row.receiver.label && !row.receiver.address && toBigInt(row.value.normalizedBigAmount.raw) === 0n) {
+				return false;
+			}
+			if (!row.receiver.address || isZeroAddress(row.receiver.address)) {
+				return false;
+			}
+			if (!row.value.normalizedBigAmount || row.value.normalizedBigAmount.raw === 0n) {
+				return false;
+			}
+			return true;
+		});
+	}, [configuration.inputs]);
+
 	/**********************************************************************************************
 	 ** isButtonDisabled function determines whether the button should be disabled based on the
 	 ** presence of a selected token address and the total amount to disperse. It returns true if
 	 ** either condition is not met and is memoized to optimize performance.
 	 *********************************************************************************************/
 	const isButtonDisabled = useMemo((): boolean => {
-		if (!configuration.tokenToSend?.address || totalToDisperse === BigInt(0)) {
-			return true;
-		}
-		return false;
-	}, [configuration.tokenToSend?.address, totalToDisperse]);
+		return !configuration.tokenToSend?.address || totalToDisperse === BigInt(0) || !isValid;
+	}, [configuration.tokenToSend?.address, totalToDisperse, isValid]);
 
 	/**********************************************************************************************
 	 ** getTotalToDisperse function returns a formatted string representing the total amount to
@@ -74,6 +86,7 @@ export function ActionSection(): ReactElement | null {
 		if (!address) {
 			onConnect();
 		}
+		alert('WIP');
 	};
 
 	if (configuration.inputs.length < 1) {
@@ -83,7 +96,7 @@ export function ActionSection(): ReactElement | null {
 	return (
 		<div
 			className={cl(
-				'mt-20 flex flex-col w-full md:w-auto gap-7 rounded-t-3xl bg-accent px-6 py-10',
+				'mt-10 flex flex-col w-full md:w-auto gap-7 rounded-t-3xl bg-accent px-6 py-10',
 				'md:mb-40 md:grid md:size-full md:grid-cols-3 md:rounded-3xl md:px-16 md:py-[60px]'
 			)}>
 			<div className={'flex flex-col items-start justify-start gap-2'}>
@@ -99,8 +112,8 @@ export function ActionSection(): ReactElement | null {
 					onClick={onAction}
 					disabled={isButtonDisabled}
 					className={cl(
-						'col-span-1 w-full h-16 items-center rounded-3xl bg-secondary text-center text-base text-primary',
-						'disabled:text-primary/70 disabled:bg-secondary/90 disabled:cursor-not-allowed'
+						'col-span-1 w-full h-16 items-center rounded-3xl bg-secondary font-bold text-center text-base text-primary',
+						'disabled:text-primary disabled:bg-secondary disabled:opacity-40 disabled:cursor-not-allowed'
 					)}>
 					{getButtonTitle()}
 				</button>

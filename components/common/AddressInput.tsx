@@ -16,7 +16,6 @@ export function AddressInput({
 	inputRef: RefObject<HTMLInputElement>;
 }): ReactElement {
 	const [isFocused, set_isFocused] = useState(false);
-	const [isTouched, set_isTouched] = useState(false);
 	const {validate} = useValidateAddressInput();
 	const [{result}, actions] = useAsyncAbortable(validate, undefined);
 
@@ -28,6 +27,14 @@ export function AddressInput({
 		actions.abort();
 		onSetValue({label: input});
 		actions.execute(input);
+	};
+
+	const getBorderColor = (): string => {
+		if (!value.error ?? value.isValid) {
+			return 'border-primary/10';
+		}
+
+		return 'border-fail';
 	};
 
 	/**********************************************************************************************
@@ -83,15 +90,8 @@ export function AddressInput({
 	}, [inputRef, isFocused, value.label.length]);
 
 	return (
-		<label
-			className={cl(
-				'h-14 rounded-2xl border px-4 py-2',
-				isTouched && value.label && (value.error || !value.isValid || value.isValid === 'undetermined')
-					? 'border-fail'
-					: 'border-primary/10'
-			)}>
+		<label className={cl('h-14 rounded-2xl border px-4 py-2', getBorderColor())}>
 			<input
-				// ref={inputRef}
 				className={cl(
 					'w-full text-primary bg-transparent ext-base transition-all ',
 					'placeholder:text-neutral-600',
@@ -110,7 +110,6 @@ export function AddressInput({
 				}}
 				onFocus={onFocusInput}
 				onBlur={() => {
-					set_isTouched(true);
 					set_isFocused(false);
 				}}
 			/>
@@ -125,9 +124,7 @@ export function AddressInput({
 					isFocused ? 'hidden' : 'block',
 					isFocused ? 'translate-y-8' : 'translate-y-0',
 					'pointer-events-none',
-					value.error || !value.isValid || value.isValid === 'undetermined'
-						? '!text-fail'
-						: 'text-neutral-600'
+					(!value.error ?? value.isValid) ? 'text-primary/40' : '!text-fail'
 				)}
 			/>
 		</label>

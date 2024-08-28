@@ -1,4 +1,4 @@
-import {type ReactElement, useCallback, useMemo, useState} from 'react';
+import {type ReactElement, useCallback, useMemo} from 'react';
 import React from 'react';
 import InputNumber from 'rc-input-number';
 import {cl, formatAmount, toAddress, toBigInt} from '@builtbymom/web3/utils';
@@ -23,24 +23,31 @@ type TAmountInput = {
 export function AmountInput({value, token, onSetValue}: TAmountInput): ReactElement {
 	const {configuration} = useDisperse();
 
-	const [isFocused, set_isFocused] = useState<boolean>(false);
 	const {result, validate} = useValidateAmountInput();
 	const {getPrice} = usePrices();
 	const price = getPrice({chainID: APP_CHAIN_ID, address: toAddress(token?.address)});
+
+	const getError = (): ReactElement => {
+		if (!configuration.tokenToSend?.address) {
+			return <span className={'mb-1 text-xs text-primary/40'}>{'Token not selected'}</span>;
+		}
+		if (value.error) {
+			return <p className={'mt-1 text-xs text-fail'}>{value.error}</p>;
+		}
+		return <p className={cl('text-xs', 'text-primary/40 mt-1')}>{amountValue}</p>;
+	};
 
 	/**********************************************************************************************
 	 ** getBorderColor function determines the border color of an element based on its focus state
 	 ** and validity.
 	 *********************************************************************************************/
 	const getBorderColor = useCallback((): string => {
-		if (isFocused) {
-			return 'border-neutral-600';
-		}
 		if (value.isValid === false) {
-			return 'border-red';
+			return 'border-fail';
 		}
-		return 'border-neutral-400';
-	}, [isFocused, value.isValid]);
+
+		return 'border-primary/10';
+	}, [value.isValid]);
 
 	/**********************************************************************************************
 	 ** The amountValue memoized value contains the string representation of the token value,
@@ -75,9 +82,8 @@ export function AmountInput({value, token, onSetValue}: TAmountInput): ReactElem
 	}, [token?.address]);
 
 	return (
-		<label className={'h-14 rounded-2xl border border-primary/10 px-4 pb-1'}>
+		<label className={cl('h-14 rounded-2xl border px-4 pb-1', getBorderColor())}>
 			<InputNumber
-				// ref={inputRef}
 				value={value.amount}
 				prefixCls={cl(
 					'w-full -mb-[3px] !bg-transparent text-base transition-all',
@@ -85,7 +91,6 @@ export function AmountInput({value, token, onSetValue}: TAmountInput): ReactElem
 					'focus:placeholder:text-neutral-300 placeholder:transition-colors',
 					'focus:border-primary/10 focus:outline-0',
 					'placeholder:transition-colors overflow-hidden',
-					getBorderColor(),
 					'mt-2'
 				)}
 				min={'0'}
@@ -96,15 +101,9 @@ export function AmountInput({value, token, onSetValue}: TAmountInput): ReactElem
 				autoCorrect={'off'}
 				spellCheck={'false'}
 				onChange={value => validate(value || '', token)}
-				onFocus={() => set_isFocused(true)}
-				onBlur={() => set_isFocused(false)}
 			/>
 
-			{!configuration.tokenToSend?.address ? (
-				<span className={'mb-1 text-xs text-primary/40'}>{'Token not selected'}</span>
-			) : (
-				<p className={cl('text-xs', 'text-primary/40 mt-1')}>{amountValue}</p>
-			)}
+			{getError()}
 		</label>
 	);
 }

@@ -1,4 +1,13 @@
-import {createContext, useCallback, useContext, useMemo, useState} from 'react';
+import {
+	createContext,
+	type Dispatch,
+	type ReactElement,
+	type SetStateAction,
+	useCallback,
+	useContext,
+	useMemo,
+	useState
+} from 'react';
 import {serialize} from 'wagmi';
 import axios from 'axios';
 import {toAddress, toNormalizedBN} from '@builtbymom/web3/utils';
@@ -16,7 +25,6 @@ import {
 	usePricesDefaultProps
 } from '../utils/usePrices.helpers';
 
-import type {Dispatch, ReactElement, SetStateAction} from 'react';
 import type {Chain} from 'viem';
 import type {TDict, TNDict, TNormalizedBN, TToken} from '@builtbymom/web3/types';
 import type {TGetPriceProps, TPrices, TPricesProps, TPriceTokens} from '../types/usePrices.types';

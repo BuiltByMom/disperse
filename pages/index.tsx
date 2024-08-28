@@ -1,4 +1,4 @@
-import type {ReactElement} from 'react';
+import {type ReactElement} from 'react';
 
 import {ActionSection} from '@/components/ActionSection';
 import {Receivers} from '@/components/common/Receivers';

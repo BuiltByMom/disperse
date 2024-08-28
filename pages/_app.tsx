@@ -9,6 +9,7 @@ import '@rainbow-me/rainbowkit/styles.css';
 
 import {DisperseContextApp} from '@/components/common/contexts/useDisperse';
 import {WithPopularTokens} from '@/components/common/contexts/usePopularTokens';
+import {WithPrices} from '@/components/common/contexts/usePrices';
 import {WithFonts} from '@/components/common/WithFonts';
 import {supportedNetworks} from '@/utils/tools.chains';
 
@@ -19,11 +20,13 @@ export default function App({Component, pageProps}: AppProps): ReactElement {
 			tokenLists={['https://raw.githubusercontent.com/SmolDapp/tokenLists/main/lists/yearn-min.json']}>
 			<WithFonts>
 				<WithPopularTokens>
-					<DisperseContextApp>
-						<WalletContextApp>
-							<Component {...pageProps} />
-						</WalletContextApp>
-					</DisperseContextApp>
+					<WithPrices>
+						<DisperseContextApp>
+							<WalletContextApp>
+								<Component {...pageProps} />
+							</WalletContextApp>
+						</DisperseContextApp>
+					</WithPrices>
 				</WithPopularTokens>
 			</WithFonts>
 		</WithMom>

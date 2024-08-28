@@ -1,13 +1,17 @@
+import {type ReactElement} from 'react';
+import {toAddress} from '@builtbymom/web3/utils';
+
 import {AddReceiverCard} from './AddReceiverCard';
+import {DisperseStatus} from './DisperseStatus';
 import {DownloadTemplateButton} from './DownloadTemplateButton';
 import {ImportConfigurationButton} from './ImportConfigurationButton';
 import {ReceiverCard} from './ReceiverCard';
 import {useDisperse} from './contexts/useDisperse';
-
-import type {ReactElement} from 'react';
+import {findDuplicatedAddresses} from './utils/helpers';
 
 export function Receivers(): ReactElement {
 	const {configuration} = useDisperse();
+	const duplicatedAddresses = findDuplicatedAddresses(configuration.inputs);
 
 	return (
 		<>
@@ -16,8 +20,9 @@ export function Receivers(): ReactElement {
 					<>
 						{configuration.inputs.map(input => (
 							<ReceiverCard
-								input={input}
 								key={input.UUID}
+								input={input}
+								isDuplicated={duplicatedAddresses.has(toAddress(input.receiver.address))}
 							/>
 						))}
 						<AddReceiverCard className={'!border-primary/10'} />
@@ -33,6 +38,10 @@ export function Receivers(): ReactElement {
 					</div>
 				</div>
 			)}
+
+			<div className={'mx-6 mt-10 md:mx-0'}>
+				<DisperseStatus />
+			</div>
 		</>
 	);
 }

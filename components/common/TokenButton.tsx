@@ -72,48 +72,67 @@ export function TokenButton(props: {
 		return formatedBalance;
 	}, [props.token]);
 
-	return (
-		<button
-			onClick={props.onClick}
-			className={cl(
-				'flex flex-row gap-2 items-center justify-between py-4 px-6 w-full cursor-pointer',
-				'disabled:cursor-not-allowed disabled:opacity-20',
-				'hover:bg-primary/10 transition-all',
-				props.className
-			)}>
-			<div className={cl('flex w-full justify-between')}>
-				<div className={cl('flex w-full justify-between gap-4 items-center')}>
-					{props.token && isAddress(props.token.address) ? (
-						<ImageWithFallback
-							src={tokenIcon}
-							alt={props.token?.symbol}
-							altSrc={`${process.env.SMOL_ASSETS_URL}/token/${APP_CHAIN_ID}/${props.token?.address}/logo-32.png`}
-							quality={90}
-							width={32}
-							height={32}
-						/>
-					) : (
-						<div className={'bg-neutral-0 flex size-8 items-center justify-center rounded-full'}>
-							<IconWallet className={'size-4 text-neutral-600'} />
-						</div>
-					)}
-					<div className={'w-full max-w-[400px] text-left'}>
-						<p className={cl('whitespace-norma text-primary', 'text-base font-normal')}>
-							{props.token?.symbol || 'Select token'}
-						</p>
-						{!!props.token?.address && (
-							<p className={'text-xs text-primary/40'}>{truncateHex(props.token.address, 5)}</p>
-						)}
+	const buttonLayout: ReactElement = (
+		<div className={cl('flex w-full justify-between')}>
+			<div className={cl('flex w-full justify-between gap-4 items-center')}>
+				{props.token && isAddress(props.token.address) ? (
+					<ImageWithFallback
+						src={tokenIcon}
+						alt={props.token?.symbol}
+						altSrc={`${process.env.SMOL_ASSETS_URL}/token/${APP_CHAIN_ID}/${props.token?.address}/logo-32.png`}
+						quality={90}
+						width={32}
+						height={32}
+					/>
+				) : (
+					<div className={'bg-neutral-0 flex size-8 items-center justify-center rounded-full'}>
+						<IconWallet className={'size-4 text-primary'} />
 					</div>
-					{props.token && (
-						<div className={'size-full whitespace-nowrap  text-right font-normal text-primary'}>
-							<span className={'text-left text-base'}>{tokenBalance}</span>
-
-							<p className={cl('text-xs', 'text-grey-700')}>&nbsp;{balanceValue}</p>
-						</div>
+				)}
+				<div className={'w-full max-w-[400px] text-left'}>
+					<p className={cl('whitespace-norma text-primary', 'text-base font-normal')}>
+						{props.token?.symbol || 'Select token'}
+					</p>
+					{!!props.token?.address && (
+						<p className={'text-xs text-primary/40'}>{truncateHex(props.token.address, 5)}</p>
 					)}
 				</div>
+				{props.token && (
+					<div className={'size-full whitespace-nowrap  text-right font-normal text-primary'}>
+						<span className={'text-left text-base'}>{tokenBalance}</span>
+
+						<p className={cl('text-xs', 'text-grey-700')}>&nbsp;{balanceValue}</p>
+					</div>
+				)}
 			</div>
-		</button>
+		</div>
+	);
+
+	return (
+		<>
+			{props.onClick ? (
+				<button
+					onClick={props.onClick}
+					className={cl(
+						'flex flex-row gap-2 items-center justify-between py-4 px-6 w-full cursor-pointer',
+						'disabled:cursor-not-allowed disabled:opacity-20',
+						'hover:bg-primary/10 transition-all',
+						props.className
+					)}>
+					{buttonLayout}
+				</button>
+			) : (
+				<div
+					onClick={props.onClick}
+					className={cl(
+						'flex flex-row gap-2 items-center justify-between py-4 px-6 w-full cursor-pointer',
+						'disabled:cursor-not-allowed disabled:opacity-20',
+						'hover:bg-primary/10 transition-all',
+						props.className
+					)}>
+					{buttonLayout}
+				</div>
+			)}
+		</>
 	);
 }

@@ -30,7 +30,7 @@ export function Controls(): ReactElement | null {
 	};
 
 	return (
-		<div className={'my-10 flex w-full justify-between px-6 md:mt-[100px] md:px-0'}>
+		<div className={'mb-10 flex w-full justify-between px-6 md:px-0'}>
 			<div className={'grid grid-cols-2 gap-4 md:flex md:gap-2'}>
 				<ImportConfigurationButton className={'!bg-primary !text-secondary hover:!bg-primary/90'} />
 				<ExportConfigurationButton className={'hover:!bg-primary/90'} />
