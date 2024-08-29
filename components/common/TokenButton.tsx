@@ -1,4 +1,5 @@
 import {type ReactElement, useMemo} from 'react';
+import Link from 'next/link';
 import {useTokenList} from '@builtbymom/web3/contexts/WithTokenList';
 import {cl, formatAmount, isAddress, toAddress, toBigInt, truncateHex} from '@builtbymom/web3/utils';
 
@@ -111,7 +112,8 @@ export function TokenButton(props: {
 	return (
 		<>
 			{props.onClick ? (
-				<button
+				<Link
+					href={`?token=${props.token.address}`}
 					onClick={props.onClick}
 					className={cl(
 						'flex flex-row gap-2 items-center justify-between py-4 px-6 w-full cursor-pointer',
@@ -120,7 +122,7 @@ export function TokenButton(props: {
 						props.className
 					)}>
 					{buttonLayout}
-				</button>
+				</Link>
 			) : (
 				<div
 					onClick={props.onClick}

@@ -1,15 +1,15 @@
 import Papa from 'papaparse';
 import {cl, isAddress, toAddress} from '@builtbymom/web3/utils';
 
+import {newDisperseVoidRow} from '../disperse/useDisperse.helpers';
 import {IconImport} from './icons/IconImport';
 
 import type {ChangeEvent, ReactElement} from 'react';
-import type {TDisperseInput} from '@/components/common/types/disperse.types';
-import type {TInputAddressLike} from '@/components/common/utils/tools.address';
+import type {TDisperseInput} from './types/disperse.types';
+import type {TInputAddressLike} from './utils/tools.address';
 
 import {useDisperse} from '@/components/common/contexts/useDisperse';
 import {useValidateAmountInput} from '@/components/common/hooks/useValidateAmountInput';
-import {newDisperseVoidRow} from '@/components/disperse/useDisperse.helpers';
 
 export function ImportConfigurationButton({className}: {className?: string}): ReactElement {
 	const {configuration, dispatchConfiguration} = useDisperse();

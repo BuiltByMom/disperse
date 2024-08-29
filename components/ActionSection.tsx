@@ -1,12 +1,121 @@
-import {type ReactElement, useCallback, useMemo} from 'react';
+import {type ReactElement, useCallback, useMemo, useState} from 'react';
+import {erc20Abi, zeroAddress} from 'viem';
+import {useReadContract} from 'wagmi';
+import useWallet from '@builtbymom/web3/contexts/useWallet';
 import {useWeb3} from '@builtbymom/web3/contexts/useWeb3';
-import {cl, formatAmount, isZeroAddress, toBigInt, toNormalizedValue} from '@builtbymom/web3/utils';
+import {useChainID} from '@builtbymom/web3/hooks/useChainID';
+import {
+	cl,
+	ETH_TOKEN_ADDRESS,
+	formatAmount,
+	isZeroAddress,
+	toAddress,
+	toBigInt,
+	toNormalizedValue,
+	zeroNormalizedBN
+} from '@builtbymom/web3/utils';
+import {approveERC20, defaultTxStatus} from '@builtbymom/web3/utils/wagmi';
 
+import {Button} from './common/Button';
 import {useDisperse} from './common/contexts/useDisperse';
+import {ErrorModal} from './common/ErrorModal';
+import {useConfirmDisperse} from './common/hooks/useConfirmDisperse';
+import {useSend} from './common/hooks/useSend';
+import {SuccessModal} from './common/SuccessModal';
+
+import type {TTxStatus} from '@builtbymom/web3/utils/wagmi';
+
+import {CHAINS} from '@/utils/tools.chains';
+
+type TApprovalWizardProps = {
+	onSuccess: () => void;
+	totalToDisperse: bigint;
+};
+
+const useApproveDisperse = ({
+	onSuccess,
+	totalToDisperse
+}: TApprovalWizardProps): {
+	approvalStatus: TTxStatus;
+	shouldApprove: boolean;
+	allowance: bigint;
+	isApproved: boolean;
+	isDisabled: boolean;
+	onApproveToken: () => Promise<void>;
+	shouldUseSend: boolean;
+	refetch: VoidFunction;
+} => {
+	const {provider} = useWeb3();
+	const {safeChainID, chainID} = useChainID();
+	const {configuration} = useDisperse();
+	const [approvalStatus, set_approvalStatus] = useState(defaultTxStatus);
+	const {address} = useWeb3();
+
+	const shouldApprove = useMemo((): boolean => {
+		return toAddress(configuration.tokenToSend?.address) !== ETH_TOKEN_ADDRESS;
+	}, [configuration.tokenToSend]);
+
+	const {data: allowance = 0n, refetch} = useReadContract({
+		abi: erc20Abi,
+		functionName: 'allowance',
+		args: [toAddress(address), CHAINS[safeChainID].disperseAddress],
+		address: toAddress(configuration.tokenToSend?.address),
+		query: {
+			enabled:
+				configuration.tokenToSend !== undefined &&
+				toAddress(configuration.tokenToSend?.address) !== ETH_TOKEN_ADDRESS
+		}
+	});
+
+	const isApproved = allowance >= totalToDisperse;
+	const shouldUseSend = configuration.inputs.length === 1;
+	const onApproveToken = useCallback(async (): Promise<void> => {
+		if (isApproved || !shouldApprove) {
+			return;
+		}
+		await approveERC20({
+			connector: provider,
+			chainID: chainID,
+			contractAddress: toAddress(configuration.tokenToSend?.address),
+			spenderAddress: CHAINS[safeChainID].disperseAddress,
+			amount: totalToDisperse,
+			statusHandler: set_approvalStatus
+		}).then(result => {
+			if (result.isSuccessful) {
+				onSuccess();
+				refetch();
+			}
+		});
+	}, [
+		isApproved,
+		shouldApprove,
+		provider,
+		chainID,
+		configuration.tokenToSend?.address,
+		safeChainID,
+		totalToDisperse,
+		onSuccess,
+		refetch
+	]);
+
+	return {
+		approvalStatus,
+		shouldApprove,
+		allowance,
+		isApproved,
+		isDisabled: !approvalStatus.none || !configuration.tokenToSend,
+		onApproveToken,
+		shouldUseSend,
+		refetch
+	};
+};
 
 export function ActionSection(): ReactElement | null {
-	const {address, onConnect} = useWeb3();
-	const {configuration} = useDisperse();
+	const {address, onConnect, isWalletSafe} = useWeb3();
+	const {configuration, dispatchConfiguration} = useDisperse();
+	const {safeChainID} = useChainID();
+	const [disperseStatus, set_disperseStatus] = useState(defaultTxStatus);
+	const {getBalance} = useWallet();
 
 	/**********************************************************************************************
 	 ** totalToDisperse function calculates the total amount to disperse by summing the normalized
@@ -16,6 +125,75 @@ export function ActionSection(): ReactElement | null {
 	const totalToDisperse = useMemo((): bigint => {
 		return configuration.inputs.reduce((acc, row): bigint => acc + row.value.normalizedBigAmount.raw, 0n) ?? 0;
 	}, [configuration.inputs]);
+
+	const {isApproved, refetch, approvalStatus, onApproveToken, shouldUseSend} = useApproveDisperse({
+		onSuccess: () => {
+			set_disperseStatus(defaultTxStatus);
+		},
+		totalToDisperse
+	});
+
+	const {onHandleMigration} = useSend(
+		{
+			receiver: configuration?.inputs[0]?.receiver.address || zeroAddress,
+			amount: configuration?.inputs[0]?.value.normalizedBigAmount,
+			token: {
+				address: configuration.tokenToSend?.address || zeroAddress,
+				name: configuration?.tokenToSend?.name || '',
+				symbol: configuration?.tokenToSend?.symbol || '',
+				decimals: configuration?.tokenToSend?.decimals || 18,
+				chainID: configuration?.tokenToSend?.chainID || safeChainID,
+				value: configuration?.tokenToSend?.value || 0,
+				balance: configuration?.tokenToSend?.balance || zeroNormalizedBN
+			}
+		},
+		set_disperseStatus
+	);
+
+	const onSendSingleToken = (): void => {
+		onHandleMigration();
+		// plausible(PLAUSIBLE_EVENTS.DISPERSE_TOKENS, {
+		// 	props: {
+		// 		disperseChainID: safeChainID,
+		// 		numberOfReceivers: 1,
+		// 		tokenToDisperse: configuration.tokenToSend?.address,
+		// 		totalToDisperse: `${formatAmount(
+		// 			toNormalizedValue(totalToDisperse, configuration.tokenToSend?.decimals || 18),
+		// 			6,
+		// 			configuration.tokenToSend?.decimals || 18
+		// 		)} ${configuration.tokenToSend?.symbol || 'Tokens'}`
+		// 	}
+		// });
+	};
+
+	const {onDisperseTokens} = useConfirmDisperse({
+		onError: () => {
+			set_disperseStatus({...defaultTxStatus, error: true});
+		},
+		onSuccess: () => {
+			set_disperseStatus({...defaultTxStatus, success: true});
+		},
+		onTrigger: () => {
+			set_disperseStatus({...defaultTxStatus, pending: true});
+		}
+	});
+
+	/**********************************************************************************************
+	 ** handleApprove function is designed to call 2 transactions one by one. First we call
+	 ** approve function then we disperse tokens.
+	 *********************************************************************************************/
+	const handleApprove = useCallback(async () => {
+		await onApproveToken();
+		await refetch();
+		await onDisperseTokens();
+	}, [onApproveToken, onDisperseTokens, refetch]);
+
+	const isAboveBalance =
+		totalToDisperse >
+		getBalance({
+			address: toAddress(configuration.tokenToSend?.address),
+			chainID: Number(configuration.tokenToSend?.chainID)
+		}).raw;
 
 	const isValid = useMemo((): boolean => {
 		return configuration.inputs.every((row): boolean => {
@@ -28,9 +206,12 @@ export function ActionSection(): ReactElement | null {
 			if (!row.value.normalizedBigAmount || row.value.normalizedBigAmount.raw === 0n) {
 				return false;
 			}
+			if (isAboveBalance) {
+				return false;
+			}
 			return true;
 		});
-	}, [configuration.inputs]);
+	}, [configuration.inputs, isAboveBalance]);
 
 	/**********************************************************************************************
 	 ** isButtonDisabled function determines whether the button should be disabled based on the
@@ -38,8 +219,11 @@ export function ActionSection(): ReactElement | null {
 	 ** either condition is not met and is memoized to optimize performance.
 	 *********************************************************************************************/
 	const isButtonDisabled = useMemo((): boolean => {
+		if (!address) {
+			return false;
+		}
 		return !configuration.tokenToSend?.address || totalToDisperse === BigInt(0) || !isValid;
-	}, [configuration.tokenToSend?.address, totalToDisperse, isValid]);
+	}, [address, configuration.tokenToSend?.address, totalToDisperse, isValid]);
 
 	/**********************************************************************************************
 	 ** getTotalToDisperse function returns a formatted string representing the total amount to
@@ -76,17 +260,32 @@ export function ActionSection(): ReactElement | null {
 		if (!address) {
 			return 'Connect wallet';
 		}
+		if (
+			shouldUseSend ||
+			isWalletSafe ||
+			toAddress(configuration.tokenToSend?.address) === ETH_TOKEN_ADDRESS ||
+			isApproved
+		) {
+			return 'Disperse';
+		}
 		return 'Approve and Disperse';
 	};
 
 	/**********************************************************************************************
 	 ** TODO: write comment of what it does
 	 *********************************************************************************************/
-	const onAction = (): void => {
+	const onAction = async (): Promise<void> => {
 		if (!address) {
-			onConnect();
+			return onConnect();
 		}
-		alert('WIP');
+		if (shouldUseSend) {
+			return onSendSingleToken();
+		}
+
+		if (isApproved) {
+			return onDisperseTokens();
+		}
+		return handleApprove();
 	};
 
 	if (configuration.inputs.length < 1) {
@@ -108,16 +307,29 @@ export function ActionSection(): ReactElement | null {
 				<span className={'text-[32px] font-medium leading-[32px]'}>{configuration.inputs.length}</span>
 			</div>
 			<div className={'flex'}>
-				<button
+				<Button
 					onClick={onAction}
-					disabled={isButtonDisabled}
-					className={cl(
-						'col-span-1 w-full h-16 items-center rounded-3xl bg-secondary font-bold text-center text-base text-primary',
-						'disabled:text-primary disabled:bg-secondary disabled:opacity-40 disabled:cursor-not-allowed'
-					)}>
-					{getButtonTitle()}
-				</button>
+					isBusy={approvalStatus.pending || disperseStatus.pending}
+					isDisabled={isButtonDisabled}>
+					<span>{getButtonTitle()}</span>
+				</Button>
 			</div>
+
+			<SuccessModal
+				isOpen={disperseStatus.success}
+				totalToDisperse={getTotalToDisperse()}
+				onClose={() => {
+					set_disperseStatus({...defaultTxStatus, none: true});
+					dispatchConfiguration({type: 'RESET', payload: undefined});
+				}}
+			/>
+
+			<ErrorModal
+				onClose={() => {
+					set_disperseStatus({...defaultTxStatus, none: true});
+				}}
+				isOpen={disperseStatus.error}
+			/>
 		</div>
 	);
 }

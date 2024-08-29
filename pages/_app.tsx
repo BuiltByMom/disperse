@@ -1,5 +1,6 @@
 import {WalletContextApp} from '@builtbymom/web3/contexts/useWallet';
 import {WithMom} from '@builtbymom/web3/contexts/WithMom';
+import {SafeProvider} from '@gnosis.pm/safe-apps-react-sdk';
 
 import type {AppProps} from 'next/app';
 import type {ReactElement} from 'react';
@@ -20,13 +21,15 @@ export default function App({Component, pageProps}: AppProps): ReactElement {
 			tokenLists={['https://raw.githubusercontent.com/SmolDapp/tokenLists/main/lists/yearn-min.json']}>
 			<WithFonts>
 				<WithPopularTokens>
-					<WithPrices>
-						<DisperseContextApp>
-							<WalletContextApp>
-								<Component {...pageProps} />
-							</WalletContextApp>
-						</DisperseContextApp>
-					</WithPrices>
+					<SafeProvider>
+						<WithPrices>
+							<DisperseContextApp>
+								<WalletContextApp>
+									<Component {...pageProps} />
+								</WalletContextApp>
+							</DisperseContextApp>
+						</WithPrices>
+					</SafeProvider>
 				</WithPopularTokens>
 			</WithFonts>
 		</WithMom>
