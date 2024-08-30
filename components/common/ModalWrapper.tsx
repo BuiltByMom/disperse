@@ -9,9 +9,18 @@ type TModalWrapperProps = {
 	onClose: VoidFunction;
 	children: ReactElement;
 	shouldHasHeader?: boolean;
+	className?: string;
+	title?: string;
 };
 
-export function ModalWrapper({isOpen, onClose, children, shouldHasHeader}: TModalWrapperProps): ReactElement {
+export function ModalWrapper({
+	isOpen,
+	onClose,
+	children,
+	shouldHasHeader = true,
+	className,
+	title
+}: TModalWrapperProps): ReactElement {
 	return (
 		<Transition
 			show={isOpen}
@@ -49,11 +58,12 @@ export function ModalWrapper({isOpen, onClose, children, shouldHasHeader}: TModa
 									'relative overflow-hidden justify-start h-[500px]',
 									'flex max-w-2xl flex-col items-center border border-primary/10',
 									'rounded-3xl z-20 bg-background-modal !py-6 transition-all',
-									'sm:my-8 sm:w-full md:max-w-2xl sm:max-w-lg'
+									'sm:my-8 sm:w-full md:max-w-2xl sm:max-w-lg',
+									className
 								)}>
 								{shouldHasHeader && (
 									<>
-										<span className={'absolute left-6 top-6 text-primary'}>{'Select token'}</span>
+										<span className={'absolute left-6 top-6 text-primary'}>{title}</span>
 										<button
 											className={
 												'absolute right-6 top-6 p-2 text-neutral-600 transition-all hover:text-neutral-700'

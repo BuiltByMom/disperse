@@ -54,9 +54,10 @@ export function ReceiverCard({input, isDuplicated}: TReceiverCardProps): ReactEl
 			)}>
 			<button
 				onClick={onDeleteReceiver}
-				className={
-					'absolute right-[-7px] top-[-7px] flex size-6 items-center justify-center rounded-full bg-primary hover:bg-primary/90'
-				}>
+				className={cl(
+					'absolute right-[-7px] top-[-7px] flex size-6 items-center justify-center',
+					'rounded-full bg-primary transition-all hover:bg-primary/90'
+				)}>
 				<IconCross className={'size-2'} />
 			</button>
 			<div className={'flex h-full flex-col gap-2'}>

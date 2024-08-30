@@ -33,8 +33,8 @@ export function Receivers(): ReactElement {
 				<div className={'flex flex-col items-center gap-10'}>
 					<AddReceiverCard className={'!w-[282px]'} />
 					<div className={'flex gap-2'}>
-						<ImportConfigurationButton className={'hover:bg-primary/20'} />
-						<DownloadTemplateButton className={'hover:bg-primary/20'} />
+						<ImportConfigurationButton className={'transition-all hover:bg-primary/20'} />
+						<DownloadTemplateButton className={'transition-all hover:bg-primary/20'} />
 					</div>
 				</div>
 			)}

@@ -18,7 +18,7 @@ export function TokensFilterTab({
 		<button
 			onClick={onClick}
 			className={cl(
-				'border px-4 py-2 text-primary font-bold text-base rounded-2xl hover:bg-primary/10',
+				'border px-4 py-2 text-primary font-bold text-base rounded-2xl transition-all hover:bg-primary/10',
 				currentTab === tab.value ? 'border-accent' : 'border-primary/10',
 				className
 			)}>

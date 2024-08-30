@@ -51,14 +51,14 @@ export function TokenSelectButton(): ReactElement {
 					className={cl(
 						'flex h-min items-center justify-center rounded-[64px]',
 						'border border-accent bg-background-modal/90 px-6 py-4',
-						'hover:bg-primary/10 hover:border-accent',
+						'hover:bg-primary/10 hover:border-accent transition-all',
 						configuration?.tokenToSend?.address && 'border-primary/10'
 					)}>
 					{configuration.tokenToSend?.address ? (
 						<TokenButton
 							price={price}
 							token={configuration.tokenToSend}
-							className={'mr-3 !p-0 hover:!bg-transparent'}
+							className={'mr-3 !p-0 transition-all hover:!bg-transparent'}
 						/>
 					) : (
 						<span className={'mr-[22px] text-[32px] leading-[32px] text-primary'}>{'Token'}</span>

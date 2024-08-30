@@ -29,7 +29,7 @@ export function ErrorModal({isOpen, onClose}: TErrorModalProps): ReactElement {
 				<Button
 					onClick={onClose}
 					isBusy={false}
-					className={'!bg-accent !text-secondary'}
+					className={'!bg-accent !text-secondary transition-all hover:!bg-accent/90'}
 					isDisabled={false}>
 					<span>{'Try again'}</span>
 				</Button>

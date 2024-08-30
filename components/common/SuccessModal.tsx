@@ -34,7 +34,7 @@ export function SuccessModal({isOpen, onClose, totalToDisperse}: TSuccessModalPr
 				<Button
 					onClick={onClose}
 					isBusy={false}
-					className={'!bg-accent !text-secondary'}
+					className={'!bg-accent !text-secondary transition-all hover:bg-accent/90'}
 					isDisabled={false}>
 					<span>{'Cool'}</span>
 				</Button>

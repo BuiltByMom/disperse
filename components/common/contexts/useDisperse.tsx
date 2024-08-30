@@ -1,12 +1,27 @@
 import React, {createContext, useCallback, useContext, useMemo, useReducer, useState} from 'react';
+import {zeroNormalizedBN} from '@builtbymom/web3/utils';
 
-import {type TDisperseContext} from '../types/disperse.types';
+import {type TDisperseContext, type TDisperseInput} from '../types/disperse.types';
 import {optionalRenderProps} from '../types/optionalRenderProps';
+import {defaultInputAddressLike} from '../utils/tools.address';
 
 import type {ReactElement} from 'react';
 import type {TOptionalRenderProps} from '../types/optionalRenderProps';
 
 import {useDisperseConfigurationReducer, useDisperseDefaultProps} from '@/components/disperse/useDisperse.helpers';
+
+export function newVoidRow(): TDisperseInput {
+	return {
+		receiver: defaultInputAddressLike,
+		value: {
+			amount: '',
+			normalizedBigAmount: zeroNormalizedBN,
+			isValid: 'undetermined',
+			status: 'none'
+		},
+		UUID: crypto.randomUUID()
+	};
+}
 
 const DisperseContext = createContext<TDisperseContext>(useDisperseDefaultProps);
 export const DisperseContextApp = (props: {

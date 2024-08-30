@@ -39,7 +39,7 @@ export function HeaderSection(): ReactElement {
 						className={cl(
 							'rounded-lg bg-primary/10 p-3 text-xs',
 							'font-bold text-primary md:px-[30px] md:text-sm',
-							'hover:bg-primary/20'
+							'hover:bg-primary/20 transition-all'
 						)}>
 						{ensOrClusters ? ensOrClusters : address ? truncateHex(address, 6) : 'Connect Wallet'}
 					</button>

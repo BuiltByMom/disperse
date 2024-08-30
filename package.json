@@ -31,9 +31,10 @@
     "rc-input-number": "^9.2.0",
     "react": "^18",
     "react-dom": "^18",
+    "react-dropzone": "^14.2.3",
     "tailwindcss-animate": "^1.0.7",
-    "xxhashjs": "^0.2.2",
-    "web3-eth-abi": "1.10.0"
+    "web3-eth-abi": "1.10.0",
+    "xxhashjs": "^0.2.2"
   },
   "devDependencies": {
     "typescript": "^5",
