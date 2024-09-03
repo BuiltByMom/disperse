@@ -26,8 +26,8 @@ export function SuccessModal({isOpen, onClose, totalToDisperse}: TSuccessModalPr
 					<IconDone />
 				</div>
 				<div className={'my-10 flex flex-col'}>
-					<span className={'text-[32px] !font-bold leading-[42px] text-primary'}>{'Disperse done'}</span>
-					<p className={'mt-[10px] text-base font-bold text-primary'}>
+					<span className={'text-[32px] !font-bold leading-[42px]'}>{'Disperse done'}</span>
+					<p className={'mt-[10px] font-bold'}>
 						{`Successfully dispersed ${totalToDisperse} to ${configuration.inputs.length} receivers`}
 					</p>
 				</div>

@@ -86,7 +86,7 @@ export function AmountInput({value, token, onSetValue}: TAmountInput): ReactElem
 			<InputNumber
 				value={value.amount}
 				prefixCls={cl(
-					'w-full -mb-[3px] !bg-transparent text-base transition-all',
+					'w-full -mb-[3px] !bg-transparent transition-all',
 					'text-primary placeholder:text-primary/40 active:outline-0',
 					'focus:placeholder:text-neutral-300 placeholder:transition-colors',
 					'focus:border-primary/10 focus:outline-0',

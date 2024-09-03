@@ -7,7 +7,13 @@ import {newDisperseVoidRow} from './disperse/useDisperse.helpers';
 
 import type {ReactElement} from 'react';
 
-export function Controls(): ReactElement | null {
+export function Controls({
+	isUploadModalOpen,
+	set_isUploadModalOpen
+}: {
+	isUploadModalOpen: boolean;
+	set_isUploadModalOpen: (value: boolean) => void;
+}): ReactElement | null {
 	const {configuration, dispatchConfiguration} = useDisperse();
 	if (configuration.inputs.length < 1) {
 		return null;
@@ -33,6 +39,8 @@ export function Controls(): ReactElement | null {
 		<div className={'mb-10 flex w-full justify-between px-6 md:px-0'}>
 			<div className={'grid grid-cols-2 gap-4 md:flex md:gap-2'}>
 				<ImportConfigurationButton
+					isUploadModalOpen={isUploadModalOpen}
+					set_isUploadModalOpen={set_isUploadModalOpen}
 					className={'!bg-primary !text-secondary transition-all hover:!bg-primary/90'}
 				/>
 				<ExportConfigurationButton className={'transition-all hover:!bg-primary/90'} />

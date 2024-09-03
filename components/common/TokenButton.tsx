@@ -91,17 +91,14 @@ export function TokenButton(props: {
 					</div>
 				)}
 				<div className={'w-full max-w-[400px] text-left'}>
-					<p className={cl('whitespace-norma text-primary', 'text-base font-normal')}>
-						{props.token?.symbol || 'Select token'}
-					</p>
+					<p className={'whitespace-normal font-normal'}>{props.token?.symbol || 'Select token'}</p>
 					{!!props.token?.address && (
 						<p className={'text-xs text-primary/40'}>{truncateHex(props.token.address, 5)}</p>
 					)}
 				</div>
 				{props.token && (
 					<div className={'size-full whitespace-nowrap  text-right font-normal text-primary'}>
-						<span className={'text-left text-base'}>{tokenBalance}</span>
-
+						<span className={'text-left'}>{tokenBalance}</span>
 						<p className={cl('text-xs', 'text-grey-700')}>&nbsp;{balanceValue}</p>
 					</div>
 				)}

@@ -34,7 +34,7 @@ export function AddReceiverCard({className}: {className?: string}): ReactElement
 				className
 			)}>
 			<IconPlus className={'size-6 text-primary'} />
-			<span className={'text-base text-primary'}>{'Add receiver'}</span>
+			<span>{'Add receiver'}</span>
 		</button>
 	);
 }

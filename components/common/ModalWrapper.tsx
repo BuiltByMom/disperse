@@ -63,7 +63,7 @@ export function ModalWrapper({
 								)}>
 								{shouldHasHeader && (
 									<>
-										<span className={'absolute left-6 top-6 text-primary'}>{title}</span>
+										<span className={'absolute left-6 top-6'}>{title}</span>
 										<button
 											className={
 												'absolute right-6 top-6 p-2 text-neutral-600 transition-all hover:text-neutral-700'

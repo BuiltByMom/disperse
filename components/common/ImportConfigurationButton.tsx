@@ -1,91 +1,51 @@
-import {type ReactElement, useCallback, useEffect, useMemo, useState} from 'react';
+import {type ReactElement, useCallback, useEffect, useState} from 'react';
 import Papa from 'papaparse';
-import {useWeb3} from '@builtbymom/web3/contexts/useWeb3';
-import {useBalances} from '@builtbymom/web3/hooks/useBalances.multichains';
-import {cl, toAddress, toNormalizedBN} from '@builtbymom/web3/utils';
+import {cl, isAddress, toAddress} from '@builtbymom/web3/utils';
 
+import {newDisperseVoidRow} from '../disperse/useDisperse.helpers';
 import {UploadModal} from '../UploadModal';
-import {useValidateAddressInput} from './hooks/useValidateAddressInput';
 import {IconImport} from './icons/IconImport';
+import {errorFileUploadToast, succsessFileUploadToast} from './utils/toasts';
 
-import type {TAddress, TToken} from '@builtbymom/web3/types';
 import type {TDisperseInput} from './types/disperse.types';
+import type {TInputAddressLike} from './utils/tools.address';
 
-import {newVoidRow, useDisperse} from '@/components/common/contexts/useDisperse';
+import {useDisperse} from '@/components/common/contexts/useDisperse';
 import {useValidateAmountInput} from '@/components/common/hooks/useValidateAmountInput';
-
-type TRecord = {
-	tokenAddress: TAddress;
-	receiverAddress: TAddress;
-	value: string;
-	chainId: string;
-};
 
 type TImportConfigurationButtonProps = {
 	className?: string;
+	isUploadModalOpen: boolean;
+	set_isUploadModalOpen: (value: boolean) => void;
 };
 
-export function ImportConfigurationButton({className}: TImportConfigurationButtonProps): ReactElement {
-	const {dispatchConfiguration} = useDisperse();
-	const {chainID: safeChainID} = useWeb3();
-	const {validate: validateAddress} = useValidateAddressInput();
-	const {validate: validateAmount} = useValidateAmountInput();
-
-	const [importedTokenToSend, set_importedTokenToSend] = useState<string | undefined>(undefined);
-	const [records, set_records] = useState<TRecord[] | undefined>(undefined);
-	const [isOpen, set_isOpen] = useState(false);
-
-	const [files, set_files] = useState<Blob[] | undefined>(undefined);
-
-	const onSelectToken = (token: TToken | undefined): void => {
-		dispatchConfiguration({type: 'SET_TOKEN_TO_SEND', payload: token});
-	};
-
+export function ImportConfigurationButton({
+	isUploadModalOpen,
+	set_isUploadModalOpen,
+	className
+}: TImportConfigurationButtonProps): ReactElement {
 	const onDrop = useCallback((acceptedFiles: Blob[]) => {
 		set_files(acceptedFiles);
 	}, []);
 
-	/** Token in URL may not be present in csv file, so better to be fetched  */
-	const {data: initialTokenRaw} = useBalances({
-		tokens: [{address: toAddress(importedTokenToSend), chainID: safeChainID}]
-	});
+	const [files, set_files] = useState<Blob[] | undefined>(undefined);
+	const {validate: validateAmount} = useValidateAmountInput();
+	const {configuration, dispatchConfiguration} = useDisperse();
+	const [isProcessingFile, set_isProcessingFile] = useState(false);
 
 	useEffect(() => {
 		if (!files) {
 			return;
 		}
 		handleFileUpload(files);
-	}, [files]);
-
-	const initialToken = useMemo((): TToken | undefined => {
-		return initialTokenRaw[safeChainID] && importedTokenToSend
-			? initialTokenRaw[safeChainID][importedTokenToSend]
-			: undefined;
 		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [initialTokenRaw]);
-
-	const getInitialAmount = (amount: string, token: TToken | undefined): string => {
-		amount = amount.toLocaleLowerCase();
-		if (amount.includes('1e+')) {
-			const scientificString = amount.replace('1e+', '1e');
-			const bigIntValue = BigInt(parseFloat(scientificString).toFixed(0));
-			amount = bigIntValue.toString();
-		}
-		return amount && token ? toNormalizedBN(amount, token.decimals).display : '0';
-	};
-
-	const onAddInputs = (inputs: TDisperseInput[]): void => {
-		dispatchConfiguration({type: 'ADD_RECEIVERS', payload: inputs});
-	};
-
-	const clearReceivers = (): void => {
-		dispatchConfiguration({type: 'CLEAR_RECEIVERS', payload: undefined});
-	};
+	}, [files]);
 
 	const handleFileUpload = (files: Blob[]): void => {
 		if (!files) {
 			return;
 		}
+		set_isProcessingFile(true);
 		const [file] = files as unknown as Blob[];
 		const reader = new FileReader();
 		reader.onload = event => {
@@ -93,72 +53,78 @@ export function ImportConfigurationButton({className}: TImportConfigurationButto
 				return;
 			}
 			const {result} = event.target;
+
+			/**************************************************************************************
+			 ** Parse the CSV file using Papa Parse
+			 *************************************************************************************/
 			// eslint-disable-next-line @typescript-eslint/no-explicit-any
-			const parsedCSV = Papa.parse(result as any, {header: true}) as any;
-			const records: TRecord[] = [];
+			const parsedCSV: any = Papa.parse(result as string, {
+				header: true,
+				skipEmptyLines: true
+			});
 
-			// If we are working with a safe file, we should get 4 columns.
-			const isProbablySafeFile =
-				parsedCSV.meta.fields.length === 4 && parsedCSV.meta.fields[0] === 'tokenAddress';
+			/**************************************************************************************
+			 ** Check if the file is valid
+			 *************************************************************************************/
+			const isValidFile =
+				parsedCSV.data.length > 0 &&
+				parsedCSV.meta.fields &&
+				parsedCSV.meta.fields.length === 2 &&
+				parsedCSV.meta.fields.includes('receiverAddress') &&
+				parsedCSV.meta.fields.includes('value');
 
-			if (isProbablySafeFile) {
-				const [tokenAddress, chainId, receiverAddress, value] = parsedCSV.meta.fields;
-				for (const item of parsedCSV.data) {
-					if (!item[receiverAddress]) {
-						continue;
+			if (isValidFile) {
+				/**************************************************************************************
+				 ** Extract field names
+				 *************************************************************************************/
+				const [receiverAddress, value] = parsedCSV.meta.fields;
+
+				/**************************************************************************************
+				 ** Process each row to create records
+				 *************************************************************************************/
+				const records: TDisperseInput[] = parsedCSV.data.reduce((acc: TDisperseInput[], row: any) => {
+					const address = toAddress(row[receiverAddress]);
+					const amount = row[value];
+
+					/**************************************************************************************
+					 ** Validate address and amount
+					 *************************************************************************************/
+					if (isAddress(address) && amount) {
+						const parsedAmount = parseFloat(amount).toString();
+
+						const record: TDisperseInput = {
+							receiver: {
+								address: toAddress(address),
+								label: toAddress(address)
+							} as TInputAddressLike,
+							value: {
+								...newDisperseVoidRow().value,
+								...validateAmount(parsedAmount, configuration.tokenToSend)
+							},
+							UUID: crypto.randomUUID()
+						};
+
+						acc.push(record);
 					}
-					records.push({
-						tokenAddress: item[tokenAddress] as TAddress,
-						receiverAddress: item[receiverAddress] as TAddress,
-						value: item[value] as string,
-						chainId: item[chainId] as string
-					});
-				}
-				// records = records.filter(record => record.receiverAddress);
-				set_importedTokenToSend(records[0].tokenAddress);
-				set_records(records);
+					return acc;
+				}, []);
+
+				/**************************************************************************************
+				 ** Update the state with the new records
+				 *************************************************************************************/
+				dispatchConfiguration({type: 'PASTE_RECEIVERS', payload: records});
+				set_isUploadModalOpen(false);
+				succsessFileUploadToast();
+				set_isProcessingFile(false);
 			} else {
-				console.error('The file you are trying to upload seems to be broken');
+				set_isUploadModalOpen(false);
+				errorFileUploadToast();
+				console.error('Invalid CSV file. Please make sure the file has two columns: receiverAddress and value');
+				set_isProcessingFile(false);
 			}
 		};
-		reader.readAsBinaryString(file);
-
-		set_isOpen(false);
+		reader.readAsText(file);
 	};
-
-	/** Set imported token from url if present */
-	useEffect(() => {
-		if (initialToken) {
-			onSelectToken(initialToken);
-		}
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [initialToken]);
-
-	useEffect(() => {
-		if (!records || !Array.isArray(records)) {
-			return;
-		}
-
-		const resultInputs: TDisperseInput[] = [];
-		const promises = records.map(async record => validateAddress(undefined, record.receiverAddress));
-		Promise.all(promises)
-			.then(values => {
-				values.forEach((validatedReceiver, index) => {
-					const stringAmount = getInitialAmount(records[index].value, initialToken);
-					const value = {
-						receiver: validatedReceiver,
-						value: {...newVoidRow().value, ...validateAmount(stringAmount, initialToken)},
-						UUID: crypto.randomUUID()
-					};
-					resultInputs.push(value);
-				});
-			})
-			.finally(() => {
-				clearReceivers();
-				onAddInputs(resultInputs);
-			});
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [initialToken]);
 
 	return (
 		<button
@@ -167,16 +133,15 @@ export function ImportConfigurationButton({className}: TImportConfigurationButto
 				className
 			)}
 			onClick={() => {
-				set_isOpen(true);
-				// document.querySelector<HTMLInputElement>('#file-upload')?.click();
+				set_isUploadModalOpen(true);
 			}}>
 			<IconImport />
 			{'Import configuration'}
 
 			<UploadModal
-				isOpen={isOpen}
-				onClose={() => set_isOpen(false)}
-				onBrowse={() => document.querySelector<HTMLInputElement>('#file-upload')?.click()}
+				isProcessingFile={isProcessingFile}
+				isOpen={isUploadModalOpen}
+				onClose={() => set_isUploadModalOpen(false)}
 				handleUpload={handleFileUpload}
 				onDrop={onDrop}
 			/>

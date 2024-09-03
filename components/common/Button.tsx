@@ -23,7 +23,7 @@ export const Button = forwardRef(
 				ref={ref}
 				className={cl(
 					'col-span-1 relative w-full h-16 items-center rounded-3xl transition-all',
-					'bg-secondary font-bold text-center text-base hover:bg-secondary/90 text-primary',
+					'bg-secondary font-bold text-center hover:bg-secondary/90 text-primary',
 					'disabled:text-primary disabled:bg-secondary disabled:opacity-40 disabled:cursor-not-allowed',
 					isBusy ? 'bg-secondary opacity-40 text-primary' : '',
 					rest.className

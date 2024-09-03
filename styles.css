@@ -6,6 +6,14 @@ body {
 	font-family: 'Aeonic Mono', monospace;
 }
 
+p {
+	@apply text-primary;
+}
+
+span {
+	@apply text-primary;
+}
+
 .scrollbar-none::-webkit-scrollbar {
 	display: none;
 }

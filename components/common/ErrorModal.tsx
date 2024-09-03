@@ -23,15 +23,15 @@ export function ErrorModal({isOpen, onClose}: TErrorModalProps): ReactElement {
 					<IconFail />
 				</div>
 				<div className={'my-10 flex flex-col'}>
-					<span className={'text-[32px] font-medium leading-[42px] text-primary'}>{'Not done'}</span>
-					<p className={'mt-[10px] text-base font-medium text-primary'}>{'Oops text description'}</p>
+					<span className={'text-[32px] font-medium leading-[42px]'}>{'Not done'}</span>
+					<p className={'mt-[10px] font-medium'}>{'Oops text description'}</p>
 				</div>
 				<Button
 					onClick={onClose}
 					isBusy={false}
-					className={'!bg-accent !text-secondary transition-all hover:!bg-accent/90'}
+					className={'!bg-accent transition-all hover:!bg-accent/90'}
 					isDisabled={false}>
-					<span>{'Try again'}</span>
+					<span className={'text-secondary'}>{'Try again'}</span>
 				</Button>
 			</div>
 		</ModalWrapper>

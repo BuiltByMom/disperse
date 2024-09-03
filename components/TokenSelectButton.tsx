@@ -61,7 +61,7 @@ export function TokenSelectButton(): ReactElement {
 							className={'mr-3 !p-0 transition-all hover:!bg-transparent'}
 						/>
 					) : (
-						<span className={'mr-[22px] text-[32px] leading-[32px] text-primary'}>{'Token'}</span>
+						<span className={'mr-[22px] text-[32px] leading-[32px]'}>{'Token'}</span>
 					)}
 					<IconChevron />
 				</button>

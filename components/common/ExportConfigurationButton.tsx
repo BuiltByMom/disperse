@@ -19,7 +19,7 @@ export function ExportConfigurationButton({className}: {className?: string}): Re
 		const receiverEntries = configuration.inputs
 			.map(input => ({
 				receiverAddress: input.receiver.address,
-				value: input.value.normalizedBigAmount.raw.toString()
+				value: input.value.normalizedBigAmount.normalized.toString()
 			}))
 			.filter(entry => entry.value && entry.receiverAddress);
 

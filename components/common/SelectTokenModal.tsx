@@ -37,7 +37,7 @@ export function SelectTokenModal({isOpen, onClose}: TSelectTokenModalProps): Rea
 						<label className={'relative flex h-12 w-full rounded-2xl bg-primary/10 px-4 py-3'}>
 							<input
 								className={cl(
-									'w-full border-none outline-0 rounded-lg bg-transparent py-3 px-4 text-base',
+									'w-full border-none outline-0 rounded-lg bg-transparent py-3 px-4',
 									'placeholder:text-neutral-600 text-primary',
 									'focus:placeholder:text-neutral-300 placeholder:transition-colors',
 									'focus:border-neutral-400 disabled:cursor-not-allowed disabled:opacity-40'

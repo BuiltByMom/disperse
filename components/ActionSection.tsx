@@ -299,12 +299,14 @@ export function ActionSection(): ReactElement | null {
 				'md:mb-40 md:grid md:size-full md:grid-cols-3 md:rounded-3xl md:px-16 md:py-[60px]'
 			)}>
 			<div className={'flex flex-col items-start justify-start gap-2'}>
-				<span className={'text-base font-medium'}>{'Total to Disperse:'}</span>
-				<span className={'text-[32px] font-medium leading-[32px]'}>{getTotalToDisperse()}</span>
+				<span className={'font-medium text-secondary'}>{'Total to Disperse:'}</span>
+				<span className={'text-[32px] font-medium leading-[32px] text-secondary'}>{getTotalToDisperse()}</span>
 			</div>
 			<div className={'flex w-full flex-col items-start gap-2'}>
-				<span className={'text-start text-base font-medium'}>{'Total receivers:'}</span>
-				<span className={'text-[32px] font-medium leading-[32px]'}>{configuration.inputs.length}</span>
+				<span className={'text-start font-medium text-secondary'}>{'Total receivers:'}</span>
+				<span className={'text-[32px] font-medium leading-[32px] text-secondary'}>
+					{configuration.inputs.length}
+				</span>
 			</div>
 			<div className={'flex'}>
 				<Button

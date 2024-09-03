@@ -9,7 +9,13 @@ import {ReceiverCard} from './ReceiverCard';
 import {useDisperse} from './contexts/useDisperse';
 import {findDuplicatedAddresses} from './utils/helpers';
 
-export function Receivers(): ReactElement {
+export function Receivers({
+	isUploadModalOpen,
+	set_isUploadModalOpen
+}: {
+	isUploadModalOpen: boolean;
+	set_isUploadModalOpen: (value: boolean) => void;
+}): ReactElement {
 	const {configuration} = useDisperse();
 	const duplicatedAddresses = findDuplicatedAddresses(configuration.inputs);
 
@@ -33,7 +39,11 @@ export function Receivers(): ReactElement {
 				<div className={'flex flex-col items-center gap-10'}>
 					<AddReceiverCard className={'!w-[282px]'} />
 					<div className={'flex gap-2'}>
-						<ImportConfigurationButton className={'transition-all hover:bg-primary/20'} />
+						<ImportConfigurationButton
+							isUploadModalOpen={isUploadModalOpen}
+							set_isUploadModalOpen={set_isUploadModalOpen}
+							className={'transition-all hover:bg-primary/20'}
+						/>
 						<DownloadTemplateButton className={'transition-all hover:bg-primary/20'} />
 					</div>
 				</div>

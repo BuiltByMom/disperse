@@ -50,7 +50,7 @@ export function HeaderSection(): ReactElement {
 						<span
 							className={cl(
 								'mr-6 text-center text-[40px] font-medium leading-[48px]',
-								'text-primary md:text-[80px] md:leading-[88px]'
+								'md:text-[80px] md:leading-[88px]'
 							)}>
 							{'Send'}
 						</span>
@@ -60,8 +60,8 @@ export function HeaderSection(): ReactElement {
 					<div className={'mt-[20px] flex justify-center'}>
 						<p
 							className={cl(
-								'w-fit text-center text-[40px] font-medium leading-[48px]',
-								'text-primary md:text-[80px] md:leading-[88px]'
+								'w-fit text-center text-[40px] font-medium',
+								'leading-[48px] md:text-[80px] md:leading-[88px]'
 							)}>
 							{'to receivers:'}
 						</p>

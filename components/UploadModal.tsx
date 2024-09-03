@@ -1,24 +1,32 @@
+import {type ReactElement, useRef} from 'react';
 import {useDropzone} from 'react-dropzone';
 import Papa from 'papaparse';
 import {cl} from '@builtbymom/web3/utils';
 
+import {IconSpinner} from './common/icons/IconSpinner';
 import {IconUpload} from './common/icons/IconUpload';
 import {ModalWrapper} from './common/ModalWrapper';
-
-import type {ReactElement} from 'react';
 
 type TUploadModalProps = {
 	isOpen: boolean;
 	onClose: VoidFunction;
 	description?: string | ReactElement;
-	onBrowse: VoidFunction;
 	uploadInput?: ReactElement;
 	handleUpload: (files: Blob[]) => void;
-	onDrop: (files: Blob[]) => void;
+	onDrop?: (files: Blob[]) => void;
+	isProcessingFile?: boolean;
 };
 
-export function UploadModal({isOpen, onClose, onDrop, handleUpload, onBrowse}: TUploadModalProps): ReactElement {
+export function UploadModal({
+	isOpen,
+	onClose,
+	onDrop,
+	handleUpload,
+	isProcessingFile
+}: TUploadModalProps): ReactElement {
 	const {getRootProps, getInputProps, isDragActive} = useDropzone({onDrop, noClick: true});
+
+	const inputRef = useRef<HTMLInputElement | null>(null);
 
 	/**********************************************************************************************
 	 ** downloadTemplate function generates a CSV file from the receiverEntries array and triggers
@@ -43,17 +51,31 @@ export function UploadModal({isOpen, onClose, onDrop, handleUpload, onBrowse}: T
 	};
 
 	const getHint = (): ReactElement => {
-		if (isDragActive) {
-			return <p className={'text-primary'}>{'Drop it here!'}</p>;
+		if (isProcessingFile) {
+			return (
+				<div className={'flex flex-col items-center justify-center gap-[20px]'}>
+					<IconSpinner className={'animete-spin size-6'} />
+					<span className={''}>{'File is processing...'}</span>
+				</div>
+			);
 		}
+		const handleButtonClick = (): void => {
+			inputRef.current?.click();
+		};
+
+		if (isDragActive) {
+			return <p>{'Drop it here!'}</p>;
+		}
+
 		return (
-			<p className={'text-primary'}>
+			<p>
 				{'Drag and Drop your files here or '}
 				<button
-					onClick={onBrowse}
+					onClick={handleButtonClick}
 					className={'underline'}>
 					<input
 						{...getInputProps()}
+						ref={inputRef}
 						id={'file-upload'}
 						tabIndex={-1}
 						className={'absolute inset-0 !cursor-pointer opacity-0'}
@@ -77,7 +99,7 @@ export function UploadModal({isOpen, onClose, onDrop, handleUpload, onBrowse}: T
 				<div className={'mb-4 flex justify-center'}>
 					<span className={'text-3xl font-bold text-primary'}>{'Upload File'}</span>
 				</div>
-				<div className={'flex gap-1 text-base text-primary'}>
+				<div className={'flex gap-1 text-primary'}>
 					<p>{'Upload a CSV with existing disperse receivers.'}</p>
 					<button
 						onClick={downloadTemplate}
@@ -91,17 +113,21 @@ export function UploadModal({isOpen, onClose, onDrop, handleUpload, onBrowse}: T
 					className={cl(
 						'mt-10 relative flex size-full h-full flex-col justify-center',
 						'rounded-lg border border-dashed border-primary/40 p-6',
-						isDragActive ? 'bg-primary/50' : ''
+						isDragActive && !isProcessingFile ? 'bg-primary/50' : ''
 					)}>
 					<div className={'flex flex-col gap-6'}>
-						<div className={'flex size-full justify-center '}>
-							<IconUpload className={'size-6'} />
-						</div>
+						{!isProcessingFile && (
+							<div className={'flex size-full justify-center '}>
+								<IconUpload className={'size-6'} />
+							</div>
+						)}
 						{getHint()}
 					</div>
-					<div className={'absolute bottom-4 left-1/2 -translate-x-1/2'}>
-						<span className={'text-xs text-primary/40'}>{'.csv extension'}</span>
-					</div>
+					{!isProcessingFile && (
+						<div className={'absolute bottom-4 left-1/2 -translate-x-1/2'}>
+							<span className={'text-xs text-primary/40'}>{'.csv extension'}</span>
+						</div>
+					)}
 				</div>
 			</div>
 		</ModalWrapper>
