@@ -30,6 +30,7 @@ export function SelectTokenModal({isOpen, onClose}: TSelectTokenModalProps): Rea
 		<ModalWrapper
 			title={'Select token'}
 			isOpen={isOpen}
+			shouldExpandOnMobile={true}
 			onClose={onClose}>
 			<div className={'flex size-full justify-center'}>
 				<div className={'mt-10 flex w-full flex-col'}>

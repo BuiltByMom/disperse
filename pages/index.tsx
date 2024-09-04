@@ -128,7 +128,7 @@ export default function Home(): ReactElement {
 	return (
 		<div
 			{...getRootProps()}
-			className={'relative flex min-h-screen flex-col items-center justify-start bg-background pt-6 md:py-6'}>
+			className={'relative flex min-h-screen flex-col items-center justify-start bg-background md:py-6'}>
 			<div
 				className={cl(
 					'fixed inset-0 flex h-screen items-center justify-center z-40',
@@ -141,13 +141,13 @@ export default function Home(): ReactElement {
 						{!isProcessingFile ? (
 							<>
 								<IconUpload className={'size-14'} />
-								<p className={'text-[40px] leading-[48px]'}>{'Drop it here!'}</p>
+								<h1>{'Drop it here!'}</h1>
 								<p>{'Upload file by dropping it in this window'}</p>
 							</>
 						) : (
 							<div className={'flex size-full flex-col items-center justify-center gap-2'}>
 								<IconSpinner className={'animate-spin text-primary'} />
-								<span className={'text-[40px] leading-[48px]'}>{'File is processing...'}</span>
+								<h1>{'File is processing...'}</h1>
 							</div>
 						)}
 					</div>
@@ -165,7 +165,12 @@ export default function Home(): ReactElement {
 				/>
 				<ActionSection />
 			</div>
-			<Toaster position={'bottom-right'} />
+			<div className={'hidden md:flex'}>
+				<Toaster position={'bottom-right'} />
+			</div>
+			<div className={'flex md:hidden'}>
+				<Toaster position={'top-center'} />
+			</div>
 		</div>
 	);
 }

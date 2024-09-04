@@ -20,7 +20,7 @@ export function ConnectWalletModal({isOpen, onClose}: TConnectWalletModalProps):
 					<button
 						onClick={onConnect}
 						className={
-							'flex h-16 items-center justify-center rounded-3xl bg-accent font-bold md:w-[320px]'
+							'flex h-16 items-center justify-center rounded-3xl bg-accent p-4 font-bold md:w-[320px]'
 						}>
 						{'Connect wallet'}
 					</button>

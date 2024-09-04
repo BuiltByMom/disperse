@@ -47,24 +47,11 @@ export function HeaderSection(): ReactElement {
 
 				<div className={'z-10 mt-10 flex w-full flex-col justify-center'}>
 					<div className={'flex flex-col items-center justify-center gap-6 md:flex-row md:gap-0'}>
-						<span
-							className={cl(
-								'mr-6 text-center text-[40px] font-medium leading-[48px]',
-								'md:text-[80px] md:leading-[88px]'
-							)}>
-							{'Send'}
-						</span>
+						<h1 className={'mr-6 text-center font-medium'}>{'Send'}</h1>
 						<TokenSelectButton />
 					</div>
-					<div className={'weofiwe wefowe'}></div>
 					<div className={'mt-[20px] flex justify-center'}>
-						<p
-							className={cl(
-								'w-fit text-center text-[40px] font-medium',
-								'leading-[48px] md:text-[80px] md:leading-[88px]'
-							)}>
-							{'to receivers:'}
-						</p>
+						<h1 className={cl('w-fit text-center font-medium', '')}>{'to receivers:'}</h1>
 					</div>
 				</div>
 			</div>

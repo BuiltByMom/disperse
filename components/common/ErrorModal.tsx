@@ -23,7 +23,7 @@ export function ErrorModal({isOpen, onClose}: TErrorModalProps): ReactElement {
 					<IconFail />
 				</div>
 				<div className={'my-10 flex flex-col'}>
-					<span className={'text-[32px] font-medium leading-[42px]'}>{'Not done'}</span>
+					<h2 className={'font-medium'}>{'Not done'}</h2>
 					<p className={'mt-[10px] font-medium'}>{'Oops text description'}</p>
 				</div>
 				<Button

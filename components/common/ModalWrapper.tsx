@@ -11,6 +11,7 @@ type TModalWrapperProps = {
 	shouldHasHeader?: boolean;
 	className?: string;
 	title?: string;
+	shouldExpandOnMobile?: boolean;
 };
 
 export function ModalWrapper({
@@ -19,7 +20,8 @@ export function ModalWrapper({
 	children,
 	shouldHasHeader = true,
 	className,
-	title
+	title,
+	shouldExpandOnMobile = false
 }: TModalWrapperProps): ReactElement {
 	return (
 		<Transition
@@ -42,9 +44,10 @@ export function ModalWrapper({
 
 				<div className={'fixed inset-0 z-[1001] overflow-y-auto'}>
 					<div
-						className={
-							'flex min-h-full items-center justify-center p-4 text-center sm:items-center sm:p-0'
-						}>
+						className={cl(
+							'flex min-h-full items-center justify-center text-center sm:items-center sm:p-0',
+							shouldExpandOnMobile ? ' md:p-4' : 'p-4'
+						)}>
 						<TransitionChild
 							as={Fragment}
 							enter={'ease-out duration-300'}
@@ -59,11 +62,13 @@ export function ModalWrapper({
 									'flex max-w-2xl flex-col items-center border border-primary/10',
 									'rounded-3xl z-20 bg-background-modal !py-6 transition-all',
 									'sm:my-8 sm:w-full md:max-w-2xl sm:max-w-lg',
+									'max-sm:w-full max-sm:overflow-y-hidden',
+									shouldExpandOnMobile ? 'h-screen md:!h-[500px] rounded-none md:!rounded-3xl' : '',
 									className
 								)}>
 								{shouldHasHeader && (
-									<>
-										<span className={'absolute left-6 top-6'}>{title}</span>
+									<div className={'top-0 flex'}>
+										<span className={'absolute left-6 top-6 font-bold'}>{title}</span>
 										<button
 											className={
 												'absolute right-6 top-6 p-2 text-neutral-600 transition-all hover:text-neutral-700'
@@ -71,7 +76,7 @@ export function ModalWrapper({
 											onClick={onClose}>
 											<IconCross className={'size-3 text-primary'} />
 										</button>
-									</>
+									</div>
 								)}
 								{children}
 							</DialogPanel>

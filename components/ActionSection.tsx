@@ -300,13 +300,11 @@ export function ActionSection(): ReactElement | null {
 			)}>
 			<div className={'flex flex-col items-start justify-start gap-2'}>
 				<span className={'font-medium text-secondary'}>{'Total to Disperse:'}</span>
-				<span className={'text-[32px] font-medium leading-[32px] text-secondary'}>{getTotalToDisperse()}</span>
+				<h2 className={'font-medium text-secondary'}>{getTotalToDisperse()}</h2>
 			</div>
 			<div className={'flex w-full flex-col items-start gap-2'}>
 				<span className={'text-start font-medium text-secondary'}>{'Total receivers:'}</span>
-				<span className={'text-[32px] font-medium leading-[32px] text-secondary'}>
-					{configuration.inputs.length}
-				</span>
+				<h2 className={'font-medium text-secondary'}>{configuration.inputs.length}</h2>
 			</div>
 			<div className={'flex'}>
 				<Button

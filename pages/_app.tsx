@@ -11,15 +11,24 @@ import '@rainbow-me/rainbowkit/styles.css';
 import {DisperseContextApp} from '@/components/common/contexts/useDisperse';
 import {WithPopularTokens} from '@/components/common/contexts/usePopularTokens';
 import {WithPrices} from '@/components/common/contexts/usePrices';
+import {Meta} from '@/components/common/Meta';
 import {WithFonts} from '@/components/common/WithFonts';
 import {supportedNetworks} from '@/utils/tools.chains';
 
 export default function App({Component, pageProps}: AppProps): ReactElement {
 	return (
-		<WithMom
-			supportedChains={supportedNetworks}
-			tokenLists={['https://raw.githubusercontent.com/SmolDapp/tokenLists/main/lists/yearn-min.json']}>
-			<WithFonts>
+		<WithFonts>
+			<Meta
+				title={'Disperse - A Dapp for Dispersing ERC20 Tokens'}
+				description={'Disperse is a Dapp for dispersing ERC20 tokens to multiple wallets'}
+				og={'public/OG.png'}
+				titleColor={''}
+				themeColor={''}
+				uri={''}
+			/>
+			<WithMom
+				supportedChains={supportedNetworks}
+				tokenLists={['https://raw.githubusercontent.com/SmolDapp/tokenLists/main/lists/yearn-min.json']}>
 				<WithPopularTokens>
 					<SafeProvider>
 						<WithPrices>
@@ -31,7 +40,7 @@ export default function App({Component, pageProps}: AppProps): ReactElement {
 						</WithPrices>
 					</SafeProvider>
 				</WithPopularTokens>
-			</WithFonts>
-		</WithMom>
+			</WithMom>
+		</WithFonts>
 	);
 }

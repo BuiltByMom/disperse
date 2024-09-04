@@ -1,4 +1,4 @@
-import {type ReactElement, useCallback, useEffect, useState} from 'react';
+import {type ReactElement, useCallback, useEffect, useRef, useState} from 'react';
 import Papa from 'papaparse';
 import {cl, isAddress, toAddress} from '@builtbymom/web3/utils';
 
@@ -32,6 +32,7 @@ export function ImportConfigurationButton({
 	const {validate: validateAmount} = useValidateAmountInput();
 	const {configuration, dispatchConfiguration} = useDisperse();
 	const [isProcessingFile, set_isProcessingFile] = useState(false);
+	const inputRef = useRef<HTMLInputElement | null>(null);
 
 	useEffect(() => {
 		if (!files) {
@@ -127,24 +128,45 @@ export function ImportConfigurationButton({
 	};
 
 	return (
-		<button
-			className={cl(
-				'relative flex cursor-pointer text-xs md:text-base items-center gap-2 rounded-lg bg-primary/10 p-2 font-bold text-primary',
-				className
-			)}
-			onClick={() => {
-				set_isUploadModalOpen(true);
-			}}>
-			<IconImport />
-			{'Import configuration'}
+		<>
+			<button
+				className={cl(
+					'relative md:hidden flex cursor-pointer text-xs md:text-base items-center gap-2 rounded-lg bg-primary/10 p-2 font-bold text-primary',
+					className
+				)}>
+				<IconImport />
+				<input
+					ref={inputRef}
+					id={'file-upload'}
+					tabIndex={-1}
+					className={'absolute inset-0 !cursor-pointer opacity-0'}
+					type={'file'}
+					accept={'.csv'}
+					onClick={event => event.stopPropagation()}
+					onChange={e => handleFileUpload(e.target.files as unknown as Blob[])}
+				/>
+				{'Import configuration'}
+			</button>
 
-			<UploadModal
-				isProcessingFile={isProcessingFile}
-				isOpen={isUploadModalOpen}
-				onClose={() => set_isUploadModalOpen(false)}
-				handleUpload={handleFileUpload}
-				onDrop={onDrop}
-			/>
-		</button>
+			<button
+				className={cl(
+					'relative hidden md:flex cursor-pointer text-xs md:text-base items-center gap-2 rounded-lg bg-primary/10 p-2 font-bold text-primary',
+					className
+				)}
+				onClick={() => {
+					set_isUploadModalOpen(true);
+				}}>
+				<IconImport />
+				{'Import configuration'}
+
+				<UploadModal
+					isProcessingFile={isProcessingFile}
+					isOpen={isUploadModalOpen}
+					onClose={() => set_isUploadModalOpen(false)}
+					handleUpload={handleFileUpload}
+					onDrop={onDrop}
+				/>
+			</button>
+		</>
 	);
 }

@@ -23,7 +23,7 @@ export const errorFileUploadToast = (): string =>
 		<div
 			className={cl(
 				t.visible ? 'animate-enter' : 'animate-leave',
-				',/5 pointer-events-auto flex bg-fail gap-2 items-center max-w-md rounded-lg text-primary px-6 py-4 shadow-lg'
+				',/5 pointer-events-auto w-screen flex bg-fail gap-2 items-center absolute md:max-w-md rounded-lg text-primary px-6 py-4 shadow-lg'
 			)}>
 			<div className={'rounded-full bg-primary p-2'}>
 				<IconCross className={'size-2 text-fail'} />

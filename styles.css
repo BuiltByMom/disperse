@@ -14,6 +14,14 @@ span {
 	@apply text-primary;
 }
 
+h1 {
+	@apply text-[40px] leading-[48px] text-primary md:text-[80px] md:leading-[88px];
+}
+
+h2 {
+	@apply text-[32px] leading-[32px] text-primary;
+}
+
 .scrollbar-none::-webkit-scrollbar {
 	display: none;
 }
