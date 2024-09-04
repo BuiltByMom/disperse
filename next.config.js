@@ -34,6 +34,38 @@ module.exports = withPlausibleProxy({
 				{
 					protocol: 'https',
 					hostname: '*.yearn.space'
+				},
+				{
+					protocol: 'https',
+					hostname: 'tokens.1inch.io'
+				},
+				{
+					protocol: 'https',
+					hostname: 'assets.coingecko.com'
+				},
+				{
+					protocol: 'https',
+					hostname: 'etherscan.io'
+				},
+				{
+					protocol: 'https',
+					hostname: 'cdn.paraswap.io'
+				},
+				{
+					protocol: 'https',
+					hostname: 'ethereum-optimism.github.io'
+				},
+				{
+					protocol: 'https',
+					hostname: 'jpyc.jp'
+				},
+				{
+					protocol: 'https',
+					hostname: 's2.coinmarketcap.com'
+				},
+				{
+					protocol: 'https',
+					hostname: 'gnosis.mypinata.cloud'
 				}
 			]
 		},

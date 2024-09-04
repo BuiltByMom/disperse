@@ -23,12 +23,9 @@ module.exports = {
 	plugins: ['@typescript-eslint', 'react', 'tailwindcss', 'unused-imports', 'simple-import-sort', 'import'],
 	settings: {
 		react: {version: 'detect'},
-		next: {
-			rootDir: 'packages'
-		},
 		'import/resolver': {typescript: {}}
 	},
-	ignorePatterns: ['public/sw*', 'public/workbox*', 'ipfs'],
+	ignorePatterns: ['public/sw*', 'public/workbox*', 'ipfs/*'],
 	rules: {
 		'import/default': 0,
 		'react/prop-types': 0,

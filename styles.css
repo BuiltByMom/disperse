@@ -5,3 +5,53 @@
 body {
 	font-family: 'Aeonic Mono', monospace;
 }
+
+p {
+	@apply text-primary;
+}
+
+span {
+	@apply text-primary;
+}
+
+h1 {
+	@apply text-[40px] leading-[48px] text-primary md:text-[80px] md:leading-[88px];
+}
+
+h2 {
+	@apply text-[32px] leading-[32px] text-primary;
+}
+
+.scrollbar-none::-webkit-scrollbar {
+	display: none;
+}
+.scrollbar-none {
+	-ms-overflow-style: none; /* IE and Edge */
+	scrollbar-width: none; /* Firefox */
+}
+
+.hover-fix::before {
+	display: block;
+	content: attr(title);
+	font-weight: bold;
+	height: 0;
+	overflow: hidden;
+	visibility: hidden;
+}
+
+[type='text'],
+[type='number'],
+input:where(:not([type])) {
+	outline: 0;
+	border: none;
+	padding: 0;
+	outline-offset: 0;
+}
+
+[type='text']:focus {
+	outline: 0;
+	border: none;
+	padding: 0;
+	outline-offset: 0;
+	box-shadow: none;
+}

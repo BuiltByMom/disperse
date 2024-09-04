@@ -1,44 +1,44 @@
-import {type ReactElement, useCallback, useEffect, useState} from 'react';
-import {useDropzone} from 'react-dropzone';
-import {Toaster} from 'react-hot-toast';
+import {type ReactElement, useCallback, useEffect, useRef, useState} from 'react';
 import Papa from 'papaparse';
 import {cl, isAddress, toAddress} from '@builtbymom/web3/utils';
 
-import type {TDisperseInput} from '@/components/common/types/disperse.types';
-import type {TInputAddressLike} from '@/components/common/utils/tools.address';
+import {newDisperseVoidRow} from '../disperse/useDisperse.helpers';
+import {UploadModal} from '../UploadModal';
+import {IconImport} from './icons/IconImport';
+import {errorFileUploadToast, succsessFileUploadToast} from './utils/toasts';
 
-import {ActionSection} from '@/components/ActionSection';
+import type {TDisperseInput} from './types/disperse.types';
+import type {TInputAddressLike} from './utils/tools.address';
+
 import {useDisperse} from '@/components/common/contexts/useDisperse';
 import {useValidateAmountInput} from '@/components/common/hooks/useValidateAmountInput';
-import {IconSpinner} from '@/components/common/icons/IconSpinner';
-import {IconUpload} from '@/components/common/icons/IconUpload';
-import {Receivers} from '@/components/common/Receivers';
-import {errorFileUploadToast, succsessFileUploadToast} from '@/components/common/utils/toasts';
-import {Controls} from '@/components/Controls';
-import {newDisperseVoidRow} from '@/components/disperse/useDisperse.helpers';
-import {HeaderSection} from '@/components/HeaderSection';
 
-export default function Home(): ReactElement {
+type TImportConfigurationButtonProps = {
+	className?: string;
+	isUploadModalOpen: boolean;
+	set_isUploadModalOpen: (value: boolean) => void;
+};
+
+export function ImportConfigurationButton({
+	isUploadModalOpen,
+	set_isUploadModalOpen,
+	className
+}: TImportConfigurationButtonProps): ReactElement {
 	const onDrop = useCallback((acceptedFiles: Blob[]) => {
 		set_files(acceptedFiles);
 	}, []);
-	const {getRootProps, isDragActive} = useDropzone({
-		onDrop,
-		noClick: true,
-		noKeyboard: true,
-		maxFiles: 1
-	});
+
 	const [files, set_files] = useState<Blob[] | undefined>(undefined);
-	const [isUploadModalOpen, set_isUploadModalOpen] = useState(false);
 	const {validate: validateAmount} = useValidateAmountInput();
 	const {configuration, dispatchConfiguration} = useDisperse();
 	const [isProcessingFile, set_isProcessingFile] = useState(false);
+	const inputRef = useRef<HTMLInputElement | null>(null);
 
 	useEffect(() => {
 		if (!files) {
 			return;
 		}
-		!isUploadModalOpen && handleFileUpload(files);
+		handleFileUpload(files);
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [files]);
 
@@ -83,7 +83,7 @@ export default function Home(): ReactElement {
 				/**************************************************************************************
 				 ** Process each row to create records
 				 *************************************************************************************/
-				const records: TDisperseInput[] = parsedCSV.data.reduce((acc: TDisperseInput[], row: never) => {
+				const records: TDisperseInput[] = parsedCSV.data.reduce((acc: TDisperseInput[], row: any) => {
 					const address = toAddress(row[receiverAddress]);
 					const amount = row[value];
 
@@ -114,63 +114,59 @@ export default function Home(): ReactElement {
 				 ** Update the state with the new records
 				 *************************************************************************************/
 				dispatchConfiguration({type: 'PASTE_RECEIVERS', payload: records});
+				set_isUploadModalOpen(false);
 				succsessFileUploadToast();
 				set_isProcessingFile(false);
 			} else {
-				set_isProcessingFile(false);
+				set_isUploadModalOpen(false);
 				errorFileUploadToast();
 				console.error('Invalid CSV file. Please make sure the file has two columns: receiverAddress and value');
+				set_isProcessingFile(false);
 			}
 		};
 		reader.readAsText(file);
 	};
 
 	return (
-		<div
-			{...getRootProps()}
-			className={'relative flex min-h-screen flex-col items-center justify-start bg-background md:py-6'}>
-			<div
+		<>
+			<button
 				className={cl(
-					'fixed inset-0 flex h-screen items-center justify-center z-40',
-					(isDragActive && !isUploadModalOpen) || isProcessingFile
-						? 'bg-secondary/5 backdrop-blur-lg transition-opacity'
-						: 'pointer-events-none'
+					'relative md:hidden flex cursor-pointer text-xs md:text-base items-center gap-2 rounded-lg bg-primary/10 p-2 font-bold text-primary',
+					className
 				)}>
-				{(isDragActive && !isUploadModalOpen) || isProcessingFile ? (
-					<div className={'absolute flex h-min flex-col items-center justify-center gap-[14px]'}>
-						{!isProcessingFile ? (
-							<>
-								<IconUpload className={'size-14'} />
-								<h1>{'Drop it here!'}</h1>
-								<p>{'Upload file by dropping it in this window'}</p>
-							</>
-						) : (
-							<div className={'flex size-full flex-col items-center justify-center gap-2'}>
-								<IconSpinner className={'animate-spin text-primary'} />
-								<h1>{'File is processing...'}</h1>
-							</div>
-						)}
-					</div>
-				) : null}
-			</div>
-			<HeaderSection />
-			<div className={'w-full md:max-w-[1200px] md:px-6'}>
-				<Controls
-					isUploadModalOpen={isUploadModalOpen}
-					set_isUploadModalOpen={set_isUploadModalOpen}
+				<IconImport />
+				<input
+					ref={inputRef}
+					id={'file-upload'}
+					tabIndex={-1}
+					className={'absolute inset-0 !cursor-pointer opacity-0'}
+					type={'file'}
+					accept={'.csv'}
+					onClick={event => event.stopPropagation()}
+					onChange={e => handleFileUpload(e.target.files as unknown as Blob[])}
 				/>
-				<Receivers
-					isUploadModalOpen={isUploadModalOpen}
-					set_isUploadModalOpen={set_isUploadModalOpen}
+				{'Import configuration'}
+			</button>
+
+			<button
+				className={cl(
+					'relative hidden md:flex cursor-pointer text-xs md:text-base items-center gap-2 rounded-lg bg-primary/10 p-2 font-bold text-primary',
+					className
+				)}
+				onClick={() => {
+					set_isUploadModalOpen(true);
+				}}>
+				<IconImport />
+				{'Import configuration'}
+
+				<UploadModal
+					isProcessingFile={isProcessingFile}
+					isOpen={isUploadModalOpen}
+					onClose={() => set_isUploadModalOpen(false)}
+					handleUpload={handleFileUpload}
+					onDrop={onDrop}
 				/>
-				<ActionSection />
-			</div>
-			<div className={'hidden md:flex'}>
-				<Toaster position={'bottom-right'} />
-			</div>
-			<div className={'flex md:hidden'}>
-				<Toaster position={'top-center'} />
-			</div>
-		</div>
+			</button>
+		</>
 	);
 }
