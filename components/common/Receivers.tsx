@@ -31,7 +31,7 @@ export function Receivers({
 								isDuplicated={duplicatedAddresses.has(toAddress(input.receiver.address))}
 							/>
 						))}
-						<AddReceiverCard className={'!border-primary/10'} />
+						<AddReceiverCard className={'!border-primary/10 bg-background-modal'} />
 					</>
 				)}
 			</div>
