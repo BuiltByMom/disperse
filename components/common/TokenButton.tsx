@@ -1,14 +1,13 @@
 import {type ReactElement, useMemo} from 'react';
 import Link from 'next/link';
 import {useTokenList} from '@builtbymom/web3/contexts/WithTokenList';
+import {useChainID} from '@builtbymom/web3/hooks/useChainID';
 import {cl, formatAmount, isAddress, toAddress, toBigInt, truncateHex} from '@builtbymom/web3/utils';
 
 import {ImageWithFallback} from './ImageWithFallback';
 import {IconWallet} from './icons/IconWallet';
 
 import type {TDict, TNDict, TNormalizedBN, TToken} from '@builtbymom/web3/types';
-
-import {APP_CHAIN_ID} from '@/constants';
 
 export function TokenButton(props: {
 	token: TToken;
@@ -18,6 +17,7 @@ export function TokenButton(props: {
 	price?: TNormalizedBN;
 }): ReactElement {
 	const {getToken} = useTokenList();
+	const {chainID} = useChainID();
 
 	/**********************************************************************************************
 	 ** The tokenIcon memoized value contains the URL of the token icon. Based on the provided
@@ -30,12 +30,12 @@ export function TokenButton(props: {
 		if (props.token?.logoURI) {
 			return props.token.logoURI;
 		}
-		const tokenFromList = getToken({chainID: APP_CHAIN_ID, address: props.token.address});
+		const tokenFromList = getToken({chainID: chainID, address: props.token.address});
 		if (tokenFromList?.logoURI) {
 			return tokenFromList.logoURI;
 		}
-		return `${process.env.SMOL_ASSETS_URL}/token/${APP_CHAIN_ID}/${props.token.address}/logo-32.png`;
-	}, [getToken, props.token]);
+		return `${process.env.SMOL_ASSETS_URL}/token/${chainID}/${props.token.address}/logo-32.png`;
+	}, [chainID, getToken, props.token]);
 
 	/**********************************************************************************************
 	 ** The balanceValue memoized value contains the string representation of the token balance,
@@ -45,7 +45,7 @@ export function TokenButton(props: {
 		if (!props.token) {
 			return 'N/A';
 		}
-		const price = props.prices?.[APP_CHAIN_ID]?.[toAddress(props.token.address)];
+		const price = props.prices?.[chainID]?.[toAddress(props.token.address)];
 		if (toBigInt(price?.raw) === 0n) {
 			return 'N/A';
 		}
@@ -53,7 +53,7 @@ export function TokenButton(props: {
 
 		const formatedValue = formatAmount(value, 2);
 		return `$${formatedValue}`;
-	}, [props.prices, props.token]);
+	}, [chainID, props.prices, props.token]);
 
 	/**********************************************************************************************
 	 ** The tokenBalance memoized value contains the string representation of the token balance,
@@ -80,7 +80,7 @@ export function TokenButton(props: {
 					<ImageWithFallback
 						src={tokenIcon}
 						alt={props.token?.symbol}
-						altSrc={`${process.env.SMOL_ASSETS_URL}/token/${APP_CHAIN_ID}/${props.token?.address}/logo-32.png`}
+						altSrc={`${process.env.SMOL_ASSETS_URL}/token/${chainID}/${props.token?.address}/logo-32.png`}
 						quality={90}
 						width={32}
 						height={32}

@@ -17,7 +17,6 @@ import type {ReactElement} from 'react';
 import type {TDisperseInput, TDisperseQuery} from '../types/disperse.types';
 
 import {newDisperseVoidRow} from '@/components/disperse/useDisperse.helpers';
-import {APP_CHAIN_ID} from '@/constants';
 
 type TDisperseQueryManagement = {
 	stateFromUrl: TDisperseQuery;
@@ -65,7 +64,7 @@ export function useDisperseQuery(): {
 	stateFromUrl: TDisperseQuery;
 	hasInitialInputs: boolean;
 } {
-	const {safeChainID} = useChainID();
+	const {safeChainID, chainID} = useChainID();
 	const {dispatchConfiguration} = useDisperse();
 
 	const router = useRouter();
@@ -87,12 +86,12 @@ export function useDisperseQuery(): {
 
 	/** Token in URL may not be present in token list, so better to be fetched  */
 	const {data: initialTokenRaw} = useBalances({
-		tokens: [{address: toAddress(initialStateFromUrl?.token), chainID: APP_CHAIN_ID}]
+		tokens: [{address: toAddress(initialStateFromUrl?.token), chainID}]
 	});
 
 	const initialToken =
 		initialTokenRaw[safeChainID] && initialStateFromUrl?.token
-			? initialTokenRaw[APP_CHAIN_ID][initialStateFromUrl?.token]
+			? initialTokenRaw[chainID][initialStateFromUrl?.token]
 			: undefined;
 
 	const onSelectToken = (token: TToken): void => {

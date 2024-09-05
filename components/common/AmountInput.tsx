@@ -1,6 +1,7 @@
 import {type ReactElement, useCallback, useMemo} from 'react';
 import React from 'react';
 import InputNumber from 'rc-input-number';
+import {useChainID} from '@builtbymom/web3/hooks/useChainID';
 import {cl, formatAmount, toAddress, toBigInt} from '@builtbymom/web3/utils';
 import {useDeepCompareEffect, useUpdateEffect} from '@react-hookz/web';
 
@@ -11,8 +12,6 @@ import {useValidateAmountInput} from './hooks/useValidateAmountInput';
 import type {TNormalizedBN, TToken} from '@builtbymom/web3/types';
 import type {TAmountInputElement} from './types/disperse.types';
 
-import {APP_CHAIN_ID} from '@/constants';
-
 type TAmountInput = {
 	onSetValue: (value: Partial<TAmountInputElement>) => void;
 	value: TAmountInputElement;
@@ -22,10 +21,10 @@ type TAmountInput = {
 
 export function AmountInput({value, token, onSetValue}: TAmountInput): ReactElement {
 	const {configuration} = useDisperse();
-
+	const {chainID} = useChainID();
 	const {result, validate} = useValidateAmountInput();
 	const {getPrice} = usePrices();
-	const price = getPrice({chainID: APP_CHAIN_ID, address: toAddress(token?.address)});
+	const price = getPrice({chainID: chainID, address: toAddress(token?.address)});
 
 	const getError = (): ReactElement => {
 		if (!configuration.tokenToSend?.address) {

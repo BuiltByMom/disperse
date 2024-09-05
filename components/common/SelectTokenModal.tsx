@@ -1,5 +1,6 @@
 import {type ReactElement, useCallback, useMemo, useState} from 'react';
 import {useWeb3} from '@builtbymom/web3/contexts/useWeb3';
+import {useChainID} from '@builtbymom/web3/hooks/useChainID';
 import {cl} from '@builtbymom/web3/utils';
 import {useMountEffect} from '@react-hookz/web';
 
@@ -13,8 +14,6 @@ import {useTokensWithBalance} from './hooks/useTokensWithBalance';
 import {IconSearch} from './icons/IconSearch';
 
 import type {TToken} from '@builtbymom/web3/types';
-
-import {APP_CHAIN_ID} from '@/constants';
 
 type TSelectTokenModalProps = {
 	isOpen: boolean;
@@ -94,8 +93,9 @@ function TokenList({
 	const {listTokens} = usePopularTokens();
 	const {listTokensWithBalance} = useTokensWithBalance();
 	const {dispatchConfiguration} = useDisperse();
+	const {chainID} = useChainID();
 
-	const popularTokens = listTokens(APP_CHAIN_ID);
+	const popularTokens = listTokens(chainID);
 	const tokensWithBalance = listTokensWithBalance();
 	const [prices, set_prices] = useState({});
 
