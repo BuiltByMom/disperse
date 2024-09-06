@@ -78,14 +78,18 @@ export function DisperseStatus(): ReactElement | null {
 	}
 
 	return (
-		<div className={'flex flex-col gap-3'}>
-			{status.map((status, index) => (
-				<Warning
-					key={index}
-					message={status.message}
-					type={status.type}
-				/>
-			))}
-		</div>
+		<>
+			{status.length > 0 && (
+				<div className={'mx-6 mt-10 flex flex-col gap-3 md:mx-0'}>
+					{status.map((status, index) => (
+						<Warning
+							key={index}
+							message={status.message}
+							type={status.type}
+						/>
+					))}
+				</div>
+			)}
+		</>
 	);
 }

@@ -300,7 +300,7 @@ export function ActionSection(): ReactElement | null {
 		<div
 			className={cl(
 				'mt-10 flex flex-col w-full md:w-auto gap-7 rounded-t-3xl bg-accent px-6 py-10',
-				'md:mb-40 md:grid md:size-full md:grid-cols-3 md:rounded-3xl md:px-16 md:py-[60px]'
+				'md:mb-20 md:grid md:size-full md:grid-cols-3 md:rounded-3xl md:px-16 md:py-[60px]'
 			)}>
 			<div className={'flex flex-col items-start justify-start gap-2'}>
 				<span className={'font-medium text-secondary'}>{'Total to Disperse:'}</span>

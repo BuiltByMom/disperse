@@ -49,9 +49,7 @@ export function Receivers({
 				</div>
 			)}
 
-			<div className={'mx-6 mt-10 md:mx-0'}>
-				<DisperseStatus />
-			</div>
+			<DisperseStatus />
 		</>
 	);
 }
