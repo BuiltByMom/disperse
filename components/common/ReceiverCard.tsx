@@ -50,8 +50,8 @@ export function ReceiverCard({input, isDuplicated}: TReceiverCardProps): ReactEl
 	return (
 		<motion.div
 			initial={'hidden'}
-			transition={{duration: 0.3}}
-			animate={{opacity: 1, scale: [0.7, 0.9, 1]}}
+			transition={{duration: 0.1}}
+			animate={{opacity: 1, scale: [0.9, 1]}}
 			className={cl(
 				'relative col-span-1 w-full rounded-3xl bg-background-modal/90 p-4',
 				isDuplicated ? 'border-warning border' : ''

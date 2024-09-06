@@ -13,6 +13,7 @@ export function ConnectWalletModal({isOpen, onClose}: TConnectWalletModalProps):
 	return (
 		<ModalWrapper
 			isOpen={isOpen}
+			title={'Select token'}
 			onClose={onClose}>
 			<div className={'flex size-full items-center justify-center'}>
 				<div className={'flex flex-col items-center gap-6'}>

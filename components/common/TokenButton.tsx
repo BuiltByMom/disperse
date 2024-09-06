@@ -91,7 +91,7 @@ export function TokenButton(props: {
 					</div>
 				)}
 				<div className={'w-full max-w-[400px] text-left'}>
-					<p className={'whitespace-normal font-normal'}>{props.token?.symbol || 'Select token'}</p>
+					<p className={'whitespace-normal font-normal'}>{props.token?.symbol || props.token?.name}</p>
 					{!!props.token?.address && (
 						<p className={'text-xs text-primary/40'}>{truncateHex(props.token.address, 5)}</p>
 					)}

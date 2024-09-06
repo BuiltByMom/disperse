@@ -9,6 +9,7 @@ import '@/styles.css';
 import '@rainbow-me/rainbowkit/styles.css';
 
 import {DisperseContextApp} from '@/components/common/contexts/useDisperse';
+import {DisperseQueryManagement} from '@/components/common/contexts/useDisperseQuery';
 import {WithPopularTokens} from '@/components/common/contexts/usePopularTokens';
 import {WithPrices} from '@/components/common/contexts/usePrices';
 import {Meta} from '@/components/common/Meta';
@@ -33,9 +34,11 @@ export default function App({Component, pageProps}: AppProps): ReactElement {
 					<SafeProvider>
 						<WithPrices>
 							<DisperseContextApp>
-								<WalletContextApp>
-									<Component {...pageProps} />
-								</WalletContextApp>
+								<DisperseQueryManagement>
+									<WalletContextApp>
+										<Component {...pageProps} />
+									</WalletContextApp>
+								</DisperseQueryManagement>
 							</DisperseContextApp>
 						</WithPrices>
 					</SafeProvider>
