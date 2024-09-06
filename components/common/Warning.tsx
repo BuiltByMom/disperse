@@ -9,6 +9,17 @@ type TWaringProps = {
 };
 
 export function Warning({message, type}: TWaringProps): ReactElement {
+	/**********************************************************************************************
+	 ** getWarningColor function determines the appropriate CSS classes for the warning component
+	 ** based on the 'type' prop. It returns a string of CSS classes that set the border color,
+	 ** text color, and background color of the warning.
+	 **
+	 ** - For 'error' type: red colors (fail)
+	 ** - For 'warning' type: yellow colors (warning)
+	 ** - For all other types: default to primary colors
+	 **
+	 ** The function uses a semi-transparent background (20% opacity) for all types.
+	 *********************************************************************************************/
 	const getWarningColor = (): string => {
 		if (type === 'error') {
 			return 'border-fail text-fail bg-fail/20';

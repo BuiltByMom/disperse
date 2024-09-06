@@ -8,9 +8,6 @@ import type {TNormalizedBN, TToken} from '@builtbymom/web3/types';
 
 export const defaultTokenInputLike: TTokenAmountInputElement = getNewInput();
 
-/**************************************************************************************************
- ** TODO: Add comment
- *************************************************************************************************/
 export function useValidateAmountInput(): {
 	validate: (
 		inputValue: string | undefined,
@@ -21,6 +18,27 @@ export function useValidateAmountInput(): {
 } {
 	const [result, set_result] = useState<Partial<TTokenAmountInputElement> | undefined>(undefined);
 
+	/**********************************************************************************************
+	 ** validate function is a memoized callback that validates the input amount for a token.
+	 ** It handles various scenarios:
+	 ** 1. No input value or raw input
+	 ** 2. Raw input greater than zero
+	 ** 3. String input value greater than zero
+	 ** 4. Invalid input
+	 ** 
+	 ** For each scenario, it checks:
+	 ** - If a token is selected
+	 ** - If the input amount exceeds the token balance
+	 ** 
+	 ** It returns an object with:
+	 ** - amount: The display value of the input
+	 ** - normalizedBigAmount: The input amount as a normalized BigInt
+	 ** - isValid: Whether the input is valid
+	 ** - token: The token object
+	 ** - error: Any error message, if applicable
+	 ** 
+	 ** The function also updates the component's state with the result.
+	 *********************************************************************************************/
 	const validate = useCallback(
 		(
 			inputValue: string | undefined,

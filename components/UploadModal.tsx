@@ -113,7 +113,7 @@ export function UploadModal({
 					className={cl(
 						'mt-10 relative flex size-full h-full flex-col justify-center',
 						'rounded-lg border border-dashed border-primary/40 p-6',
-						isDragActive && !isProcessingFile ? 'bg-primary/50' : ''
+						isDragActive && !isProcessingFile ? 'bg-primary/10' : ''
 					)}>
 					<div className={'flex flex-col gap-6'}>
 						{!isProcessingFile && (
@@ -123,7 +123,7 @@ export function UploadModal({
 						)}
 						{getHint()}
 					</div>
-					{!isProcessingFile && (
+					{!isProcessingFile && !isDragActive && (
 						<div className={'absolute bottom-4 left-1/2 -translate-x-1/2'}>
 							<span className={'text-xs text-primary/40'}>{'.csv extension'}</span>
 						</div>

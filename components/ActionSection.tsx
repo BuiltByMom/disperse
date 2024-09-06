@@ -242,11 +242,12 @@ export function ActionSection(): ReactElement | null {
 			toNormalizedValue(totalToDisperse, configuration.tokenToSend?.decimals || 18),
 			4,
 			configuration.tokenToSend?.decimals || 18
-		)} ${configuration.tokenToSend?.symbol}`;
+		)} ${configuration.tokenToSend?.symbol || configuration.tokenToSend?.name}`;
 	}, [
 		address,
 		configuration.tokenToSend?.address,
 		configuration.tokenToSend?.decimals,
+		configuration.tokenToSend?.name,
 		configuration.tokenToSend?.symbol,
 		totalToDisperse
 	]);
@@ -268,11 +269,14 @@ export function ActionSection(): ReactElement | null {
 		) {
 			return 'Disperse';
 		}
-		return 'Approve and Disperse';
+		return 'Disperse';
 	};
 
 	/**********************************************************************************************
-	 ** TODO: write comment of what it does
+	 ** onAction function handles the main action of the component based on the current state.
+	 ** It checks if the wallet is connected, if a single token should be sent, if the token is
+	 ** approved, and calls the appropriate function accordingly. The function either connects
+	 ** the wallet, sends a single token, disperses tokens, or handles token approval.
 	 *********************************************************************************************/
 	const onAction = async (): Promise<void> => {
 		if (!address) {
