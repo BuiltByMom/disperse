@@ -3,17 +3,14 @@ import {cl} from '@builtbymom/web3/utils';
 import type {ReactElement} from 'react';
 import type {TTab} from './types/types';
 
-export function TokensFilterTab({
-	currentTab,
-	tab,
-	onClick,
-	className
-}: {
+type TTokensFilterTabProps = {
 	currentTab: TTab;
 	tab: {value: TTab; label: string};
 	onClick: () => void;
 	className?: string;
-}): ReactElement {
+};
+
+export function TokensFilterTab({currentTab, tab, onClick, className}: TTokensFilterTabProps): ReactElement {
 	return (
 		<button
 			onClick={onClick}

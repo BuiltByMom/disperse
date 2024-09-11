@@ -3,9 +3,9 @@ import {cl} from '@builtbymom/web3/utils';
 
 import {IconFile} from './icons/IconFile';
 
-import type {ReactElement} from 'react';
+import type {ButtonHTMLAttributes, ReactElement} from 'react';
 
-export function DownloadTemplateButton({className}: {className?: string}): ReactElement {
+export function DownloadTemplateButton({className}: ButtonHTMLAttributes<HTMLButtonElement>): ReactElement {
 	/**********************************************************************************************
 	 ** downloadTemplate function generates a CSV file from the receiverEntries array and triggers
 	 ** a download of the file. It creates a Blob from the CSV string, generates a URL for the

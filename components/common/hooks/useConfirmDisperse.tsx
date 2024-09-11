@@ -12,7 +12,7 @@ import {getTransferTransaction} from '../utils/tools.gnosis';
 import type {TAddress} from '@builtbymom/web3/types';
 import type {BaseTransaction} from '@gnosis.pm/safe-apps-sdk';
 
-import {CHAINS} from '@/utils/tools.chains';
+import {CHAINS} from '@/components/common/utils/tools.chains';
 
 export function useConfirmDisperse({
 	onTrigger,

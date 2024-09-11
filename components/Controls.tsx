@@ -7,13 +7,12 @@ import {newDisperseVoidRow} from './disperse/useDisperse.helpers';
 
 import type {ReactElement} from 'react';
 
-export function Controls({
-	isUploadModalOpen,
-	set_isUploadModalOpen
-}: {
+type TControlsProps = {
 	isUploadModalOpen: boolean;
 	set_isUploadModalOpen: (value: boolean) => void;
-}): ReactElement | null {
+};
+
+export function Controls({isUploadModalOpen, set_isUploadModalOpen}: TControlsProps): ReactElement | null {
 	const {configuration, dispatchConfiguration} = useDisperse();
 	if (configuration.inputs.length < 1) {
 		return null;

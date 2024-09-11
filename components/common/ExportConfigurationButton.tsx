@@ -1,11 +1,11 @@
-import {type ReactElement, useCallback} from 'react';
+import {type ButtonHTMLAttributes, type ReactElement, useCallback} from 'react';
 import Papa from 'papaparse';
 import {cl} from '@builtbymom/web3/utils';
 
 import {useDisperse} from './contexts/useDisperse';
 import {IconImport} from './icons/IconImport';
 
-export function ExportConfigurationButton({className}: {className?: string}): ReactElement {
+export function ExportConfigurationButton({className}: ButtonHTMLAttributes<HTMLButtonElement>): ReactElement {
 	const {configuration} = useDisperse();
 
 	/**********************************************************************************************

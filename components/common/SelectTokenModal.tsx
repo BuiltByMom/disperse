@@ -81,15 +81,13 @@ export function SelectTokenModal({isOpen, onClose}: TSelectTokenModalProps): Rea
 	);
 }
 
-function TokenList({
-	currentTab,
-	searchValue,
-	onCloseModal
-}: {
+type TTokenListProps = {
 	currentTab: 'your_tokens' | 'popular';
 	searchValue: string;
 	onCloseModal: VoidFunction;
-}): ReactElement {
+};
+
+function TokenList({currentTab, searchValue, onCloseModal}: TTokenListProps): ReactElement {
 	const {listTokens} = usePopularTokens();
 	const {listTokensWithBalance} = useTokensWithBalance();
 	const {dispatchConfiguration} = useDisperse();

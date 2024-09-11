@@ -25,7 +25,7 @@ import {SuccessModal} from './common/SuccessModal';
 
 import type {TTxStatus} from '@builtbymom/web3/utils/wagmi';
 
-import {CHAINS} from '@/utils/tools.chains';
+import {CHAINS} from '@/components/common/utils/tools.chains';
 
 type TApprovalWizardProps = {
 	onSuccess: () => void;

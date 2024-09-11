@@ -13,8 +13,8 @@ import {DisperseQueryManagement} from '@/components/common/contexts/useDisperseQ
 import {WithPopularTokens} from '@/components/common/contexts/usePopularTokens';
 import {WithPrices} from '@/components/common/contexts/usePrices';
 import {Meta} from '@/components/common/Meta';
+import {supportedNetworks} from '@/components/common/utils/tools.chains';
 import {WithFonts} from '@/components/common/WithFonts';
-import {supportedNetworks} from '@/utils/tools.chains';
 
 export default function App({Component, pageProps}: AppProps): ReactElement {
 	return (

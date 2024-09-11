@@ -6,15 +6,13 @@ import {TextTruncate} from './TextTruncate';
 import {useValidateAddressInput} from './hooks/useValidateAddressInput';
 import {type TInputAddressLike} from './utils/tools.address';
 
-export function AddressInput({
-	value,
-	onSetValue,
-	inputRef
-}: {
+type TAddressInputProps = {
 	value: TInputAddressLike;
 	onSetValue: (value: Partial<TInputAddressLike>) => void;
 	inputRef: RefObject<HTMLInputElement>;
-}): ReactElement {
+};
+
+export function AddressInput({value, onSetValue, inputRef}: TAddressInputProps): ReactElement {
 	const [isFocused, set_isFocused] = useState(false);
 	const {validate} = useValidateAddressInput();
 	const [{result}, actions] = useAsyncAbortable(validate, undefined);

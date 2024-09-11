@@ -8,7 +8,7 @@ import {approveERC20, defaultTxStatus, type TTxStatus} from '@builtbymom/web3/ut
 
 import {useDisperse} from '../contexts/useDisperse';
 
-import {CHAINS} from '@/utils/tools.chains';
+import {CHAINS} from '@/components/common/utils/tools.chains';
 
 type TApproveDisperse = {
 	onSuccess: VoidFunction;

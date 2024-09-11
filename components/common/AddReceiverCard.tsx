@@ -1,11 +1,11 @@
-import {type ReactElement} from 'react';
+import {type ButtonHTMLAttributes, type ReactElement} from 'react';
 import {cl} from '@builtbymom/web3/utils';
 
 import {newDisperseVoidRow} from '../disperse/useDisperse.helpers';
 import {useDisperse} from './contexts/useDisperse';
 import {IconPlus} from './icons/IconPlus';
 
-export function AddReceiverCard({className}: {className?: string}): ReactElement {
+export function AddReceiverCard({className}: ButtonHTMLAttributes<HTMLButtonElement>): ReactElement {
 	const {dispatchConfiguration} = useDisperse();
 
 	/**********************************************************************************************

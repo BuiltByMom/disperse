@@ -3,11 +3,11 @@ import useWallet from '@builtbymom/web3/contexts/useWallet';
 import {useAsyncTrigger} from '@builtbymom/web3/hooks/useAsyncTrigger';
 import {isAddress, toAddress} from '@builtbymom/web3/utils';
 
-import {Warning} from './Warning';
-import {useDisperse} from './contexts/useDisperse';
+import {useDisperse} from '../common/contexts/useDisperse';
+import {Warning} from '../common/Warning';
 
 import type {TAddress} from '@builtbymom/web3/types';
-import type {TWarningType} from './types/types';
+import type {TWarningType} from '../common/types/types';
 
 export function DisperseStatus(): ReactElement | null {
 	const {configuration} = useDisperse();

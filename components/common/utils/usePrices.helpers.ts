@@ -4,7 +4,7 @@ import type {AxiosResponse} from 'axios';
 import type {TDict, TNDict} from '@builtbymom/web3/types';
 import type {TLLamaPricesEndpointResponse,TPrices,TPricesProps, TPriceTokens} from '../types/usePrices.types';
 
-import {CHAINS} from '@/utils/tools.chains';
+import {CHAINS} from '@/components/common/utils/tools.chains';
 
 export const usePricesDefaultProps: TPricesProps = {
 	pricingHash: '',

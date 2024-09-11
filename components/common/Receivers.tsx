@@ -1,21 +1,20 @@
 import {type ReactElement} from 'react';
 import {toAddress} from '@builtbymom/web3/utils';
 
+import {DisperseStatus} from '../disperse/DisperseStatus';
 import {AddReceiverCard} from './AddReceiverCard';
-import {DisperseStatus} from './DisperseStatus';
 import {DownloadTemplateButton} from './DownloadTemplateButton';
 import {ImportConfigurationButton} from './ImportConfigurationButton';
 import {ReceiverCard} from './ReceiverCard';
 import {useDisperse} from './contexts/useDisperse';
 import {findDuplicatedAddresses} from './utils/helpers';
 
-export function Receivers({
-	isUploadModalOpen,
-	set_isUploadModalOpen
-}: {
+type TReceiversProps = {
 	isUploadModalOpen: boolean;
 	set_isUploadModalOpen: (value: boolean) => void;
-}): ReactElement {
+};
+
+export function Receivers({isUploadModalOpen, set_isUploadModalOpen}: TReceiversProps): ReactElement {
 	const {configuration} = useDisperse();
 	const duplicatedAddresses = findDuplicatedAddresses(configuration.inputs);
 

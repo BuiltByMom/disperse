@@ -119,7 +119,7 @@ export const WithPopularTokens = ({children}: {children: ReactElement}): ReactEl
 	const listTokens = useCallback(
 		(_chainID?: number): TToken[] => {
 			acknowledge(balanceHash);
-			if (_chainID === undefined) { 
+			if (_chainID === undefined) {
 				_chainID = chainID;
 			}
 
